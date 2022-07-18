@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha 'test/**/*.js'",
-    "update-packages": "npm install -g npm-check-updates && ncu -u && npm install",
     "docker-run": "docker run --rm --name moonbeam_development --network host purestake/moonbeam:v0.24.0 --dev",
-    "docker-run-macos": "docker run --rm --name moonbeam_development -p 9944:9944 -p 9933:9933 purestake/moonbeam:v0.24.0 --dev --ws-external --rpc-external"
+    "docker-run-macos": "docker run --rm --name moonbeam_development -p 9944:9944 -p 9933:9933 purestake/moonbeam:v0.24.0 --dev --ws-external --rpc-external",
+    "test": "mocha 'test/**/*.js'",
+    "update-packages": "npm install -g npm-check-updates && ncu -u && npm install"
   },
   "author": "",
   "license": "ISC",
