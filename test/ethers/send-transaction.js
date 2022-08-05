@@ -33,7 +33,7 @@ describe('Ethers - Send a Transaction', function () {
   });
 
   describe('Send Transaction - transaction.js', async () => {
-    it('should send a successful transction', async () => {
+    it('should send a successful transaction', async () => {
       const value = 10;
       const tx = {
         to: bob,
