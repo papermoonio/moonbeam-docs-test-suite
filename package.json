@@ -5,13 +5,14 @@
   "main": "index.js",
   "scripts": {
     "docker-run": "docker run -d --rm --name moonbeam_development -p 9944:9944 -p 9933:9933 purestake/moonbeam:v0.24.0 --dev --ws-external --rpc-external",
-    "test": "mocha 'test/**/*.js'",
+    "test": "mocha -r dotenv/config 'test/**/*.js'",
     "update-packages": "npm install -g npm-check-updates && ncu -u && npm install"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "chai": "^4.3.6",
+    "dotenv": "^16.0.1",
     "ethers": "^5.6.9",
     "fs": "^0.0.1-security",
     "mocha": "^10.0.0",
