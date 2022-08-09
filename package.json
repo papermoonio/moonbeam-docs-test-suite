@@ -6,7 +6,7 @@
   "scripts": {
     "docker-run": "docker run -d --rm --name moonbeam_development -p 9944:9944 -p 9933:9933 purestake/moonbeam:$(grep MOONBEAM_CLIENT_VERSION .env | cut -d '=' -f2) --dev --ws-external --rpc-external",
     "test": "mocha -r dotenv/config 'test/**/*.js'",
-    "update-packages": "npm install -g npm-check-updates && ncu -u && npm install --silent"
+    "update-packages": "npx npm-check-updates -u && npm install --silent"
   },
   "author": "",
   "license": "ISC",
