@@ -12,7 +12,7 @@ describe('Ethers - Send a Transaction', function () {
   const providerRPC = {
     dev: {
       name: 'moonbeam-development',
-      rpc: 'http://127.0.0.1:9933',
+      rpc: process.env.RPC_ENDPOINT,
       chainId: 1281, // 0x501 in hex,
     },
   };
@@ -33,7 +33,7 @@ describe('Ethers - Send a Transaction', function () {
   });
 
   describe('Send Transaction - transaction.js', async () => {
-    it('should send a successful transction', async () => {
+    it('should send a successful transaction', async () => {
       const value = 10;
       const tx = {
         to: bob,
