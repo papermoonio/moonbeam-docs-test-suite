@@ -103,7 +103,7 @@ describe('Ethers - Deploy a Contract', function () {
       const data = await incrementer.number();
 
       assert.equal(data.toString(), "5");
-    })
+    }).timeout(5000)
   })
 
   describe('Increment Contract - increment.js', async () => {
