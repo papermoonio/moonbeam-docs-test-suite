@@ -59,7 +59,3 @@ If your test requires a contract to run, you can add the file to the `contracts`
 👉 Your tests should not rely on or be impacted by any previous tests that have run.
 
 👉 Use burner accounts so that you're testing against a blank account and not re-using the same account for all of the tests
-
-
-
-
