@@ -167,7 +167,3 @@ describe('Web3 - Deploy a Contract', function () {
     }).timeout(15000)
   })
 });
-
-
-
-
