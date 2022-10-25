@@ -1,13 +1,7 @@
 import { assert } from "chai";
-import { ethers } from "ethers";
+import { ethers, Wallet } from "ethers";
 
 describe('Ethers - Send a Transaction', function () {
-  let alice = {
-    "address": "0xf24FF3a9CF04c71Dbc94D0b566f7A27B94566cac",
-    "pk": "0x5fb92d6e98884f76de468fa3f6278f8807c48bebc13595d45af5bdc4da702133",
-  }
-  let bob = "0x3Cd0A705a2DC65e5b1E1205896BaA2be8A07c6e0"
-
   // Define network configurations
   const providerRPC = {
     dev: {
@@ -25,10 +19,20 @@ describe('Ethers - Send a Transaction', function () {
     }
   );
 
+  const alice = {
+    "address": "0xf24FF3a9CF04c71Dbc94D0b566f7A27B94566cac",
+    "pk": "0x5fb92d6e98884f76de468fa3f6278f8807c48bebc13595d45af5bdc4da702133",
+  }
+  const bob = new ethers.Wallet.createRandom().address;
+
   describe('Check Balances -  balances.js', async () => {
     it('should return a balance for alice', async () => {
       const balance = ethers.utils.formatEther(await provider.getBalance(alice.address));
       assert.equal(balance > 0, true);
+    });
+    it('should return a balance for bob', async () => {
+      const balance = ethers.utils.formatEther(await provider.getBalance(bob));
+      assert.equal(balance, 0);
     });
   });
 
@@ -45,5 +49,9 @@ describe('Ethers - Send a Transaction', function () {
       // the status of a transaction is 1 if successful
       assert.equal(res.status, 1);
     }).timeout(15000);
+    it('should return an updated balance for bob', async () => {
+      const balance = ethers.utils.formatEther(await provider.getBalance(bob));
+      assert.equal(balance, 10);
+    });
   });
 });
