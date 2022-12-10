@@ -4,6 +4,7 @@ import unittest
 import secrets
 from web3.gas_strategies.rpc import rpc_gas_price_strategy
 
+
 class TestSendTransaction(unittest.TestCase):
     def setUp(self):
         self.web3 = Web3(Web3.HTTPProvider('http://127.0.0.1:9933'))
@@ -11,19 +12,21 @@ class TestSendTransaction(unittest.TestCase):
         # Use default account for Alice
         self.alice = "0xf24FF3a9CF04c71Dbc94D0b566f7A27B94566cac"
         self.alice_pk = "0x5fb92d6e98884f76de468fa3f6278f8807c48bebc13595d45af5bdc4da702133"
-        
+
         # Create randomly generated account for Bob
         random = secrets.token_hex(32)
         self.bob = Account.from_key("0x" + random).address
 
     def test_alices_balance(self):
-        alices_balance = self.web3.fromWei(self.web3.eth.get_balance(self.alice), "ether")
+        alices_balance = self.web3.fromWei(
+            self.web3.eth.get_balance(self.alice), "ether")
         self.assertGreater(alices_balance, 0)
 
     def test_bobs_balance(self):
-        bobs_balance = self.web3.fromWei(self.web3.eth.get_balance(self.bob), "ether")
+        bobs_balance = self.web3.fromWei(
+            self.web3.eth.get_balance(self.bob), "ether")
         self.assertEqual(bobs_balance, 0)
-        
+
     def test_send_successful_tx(self):
         self.web3.eth.set_gas_price_strategy(rpc_gas_price_strategy)
 
@@ -42,12 +45,13 @@ class TestSendTransaction(unittest.TestCase):
 
         self.assertEqual(tx_receipt["status"], 1)
 
-        bobs_balance = self.web3.fromWei(self.web3.eth.get_balance(self.bob), "ether")
+        bobs_balance = self.web3.fromWei(
+            self.web3.eth.get_balance(self.bob), "ether")
         self.assertEqual(bobs_balance, 1)
 
     def tearDown(self) -> None:
         return super().tearDown()
 
+
 if __name__ == '__main__':
     unittest.main()
-
