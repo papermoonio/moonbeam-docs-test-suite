@@ -1,5 +1,6 @@
-import { assert } from "chai";
+import { assert, expect } from "chai";
 import { ethers } from "ethers";
+import incrementerAbi from  "../../../../../../contracts/incrementer-abi.json" assert { type: 'json' };
 import fs from "fs";
 import solc from "solc";
 
@@ -62,7 +63,7 @@ describe('Ethers - Deploy a Contract', function () {
     return contract;
   }
 
-  describe('Compile Contract - compile.js', async () => {
+  describe.only('Compile Contract - compile.js', async () => {
     it('should compile the contract into bytecode', async () => {
       const contractFile = compileContract();
       const bytecode = contractFile.evm.bytecode.object;
@@ -70,11 +71,11 @@ describe('Ethers - Deploy a Contract', function () {
       assert.exists(bytecode);
     });
 
-    it('should return the correct number of ABI inputs', async () => {
+    it('should return the ABI', async () => {
       const contractFile = compileContract();
       const abi = contractFile.abi;
 
-      assert.lengthOf(abi, 4);
+      expect(abi).to.eql(incrementerAbi.abi);
     })
   });
 

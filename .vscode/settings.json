@@ -1,0 +1,5 @@
+{
+    "python.analysis.extraPaths": [
+        "./test/builders/build/eth-api/libraries/web3py"
+    ]
+}

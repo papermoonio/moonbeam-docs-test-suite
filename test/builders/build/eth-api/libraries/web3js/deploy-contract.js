@@ -1,4 +1,5 @@
-import { assert } from "chai";
+import { assert, expect } from "chai";
+import incrementerAbi from  "../../../../../../contracts/incrementer-abi.json" assert { type: 'json' };
 import Web3 from "web3";
 import fs from "fs";
 import solc from "solc";
@@ -61,7 +62,7 @@ describe('Web3 - Deploy a Contract', function () {
     return createReceipt;
   }
 
-  describe('Compile Contract - compile.js', async () => {
+  describe.only('Compile Contract - compile.js', async () => {
     it('should compile the contract into bytecode', async () => {
       const contractFile = compileContract();
       const bytecode = contractFile.evm.bytecode.object;
@@ -73,7 +74,7 @@ describe('Web3 - Deploy a Contract', function () {
       const contractFile = compileContract();
       const abi = contractFile.abi;
 
-      assert.lengthOf(abi, 4);
+      expect(abi).to.eql(incrementerAbi.abi);
     })
   });
 
