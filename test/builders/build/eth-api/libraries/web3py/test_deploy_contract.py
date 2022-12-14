@@ -98,8 +98,8 @@ class TestDeployContract(unittest.TestCase):
 
         deployed = deploy_contract(
             abi, bytecode, self.web3, self.alice, self.alice_pk)
+        
         contract_address = deployed["contractAddress"]
-
         incrementer = self.web3.eth.contract(address=contract_address, abi=abi)
 
         value = 3
@@ -109,11 +109,13 @@ class TestDeployContract(unittest.TestCase):
                 'nonce': self.web3.eth.get_transaction_count(self.alice),
             }
         )
+
         tx_create = self.web3.eth.account.sign_transaction(
             increment_tx, self.alice_pk)
-        self.web3.eth.send_raw_transaction(tx_create.rawTransaction)
-        data = incrementer.functions.number().call()
+        tx_hash = self.web3.eth.send_raw_transaction(tx_create.rawTransaction)
+        self.web3.eth.wait_for_transaction_receipt(tx_hash)
 
+        data = incrementer.functions.number().call()
         self.assertEqual(data, 8)
 
     def test_reset_incrementer_number(self):
@@ -135,7 +137,10 @@ class TestDeployContract(unittest.TestCase):
         )
         tx_create = self.web3.eth.account.sign_transaction(
             increment_tx, self.alice_pk)
-        self.web3.eth.send_raw_transaction(tx_create.rawTransaction)
+
+        tx_hash = self.web3.eth.send_raw_transaction(tx_create.rawTransaction)
+        self.web3.eth.wait_for_transaction_receipt(tx_hash)
+
         data = incrementer.functions.number().call()
 
         self.assertEqual(data, 0)
