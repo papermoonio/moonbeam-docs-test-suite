@@ -63,7 +63,7 @@ describe('Ethers - Deploy a Contract', function () {
     return contract;
   }
 
-  describe.only('Compile Contract - compile.js', async () => {
+  describe('Compile Contract - compile.js', async () => {
     it('should compile the contract into bytecode', async () => {
       const contractFile = compileContract();
       const bytecode = contractFile.evm.bytecode.object;
