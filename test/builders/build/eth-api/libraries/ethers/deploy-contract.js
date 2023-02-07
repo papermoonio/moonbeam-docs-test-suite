@@ -19,9 +19,9 @@ describe("Ethers - Deploy a Contract", function () {
     },
   };
   // Create ethers provider
-  const provider = new ethers.providers.StaticJsonRpcProvider(
+  const provider = new ethers.JsonRpcProvider(
     providerRPC.dev.rpc,
-    {
+     {
       chainId: providerRPC.dev.chainId,
       name: providerRPC.dev.name,
     }
@@ -58,8 +58,7 @@ describe("Ethers - Deploy a Contract", function () {
     let wallet = new ethers.Wallet(alice.pk, provider);
 
     const incrementer = new ethers.ContractFactory(abi, bytecode, wallet);
-    const contract = await incrementer.deploy([5]);
-
+    const contract = await incrementer.deploy(5);
     return contract;
   };
 
@@ -80,22 +79,16 @@ describe("Ethers - Deploy a Contract", function () {
   });
 
   describe("Deploy Contract - deploy.js", async () => {
-    let contractAddress;
-    it("should deploy the contract", async () => {
+    it("should return the correct deployed bytecode", async () => {
       const contractFile = compileContract();
       const bytecode = contractFile.evm.bytecode.object;
       const abi = contractFile.abi;
 
       const contract = await deployContract(abi, bytecode);
-      const res = await (await contract.deployed()).deployTransaction.wait();
+      await contract.waitForDeployment();
+      const deployedCode = await contract.getDeployedCode();
 
-      contractAddress = res.contractAddress;
-
-      assert.equal(res.status, 1);
-    }).timeout(15000);
-    it("should return the correct contract code", async () => {
-      const code = await provider.getCode(contractAddress);
-      assert.equal(code, deployedBytecode);
+      assert.equal(deployedCode, deployedBytecode);
     }).timeout(15000);
   });
 
@@ -106,8 +99,8 @@ describe("Ethers - Deploy a Contract", function () {
       const abi = contractFile.abi;
 
       const contract = await deployContract(abi, bytecode);
-      await contract.deployed();
-      const contractAddress = contract.address;
+      await contract.waitForDeployment();
+      const contractAddress = contract.target;
 
       const incrementer = new ethers.Contract(contractAddress, abi, provider);
 
@@ -124,7 +117,9 @@ describe("Ethers - Deploy a Contract", function () {
       const abi = contractFile.abi;
 
       const contract = await deployContract(abi, bytecode);
-      const contractAddress = contract.address;
+      await contract.waitForDeployment();
+
+      const contractAddress = contract.target;
 
       const wallet = new ethers.Wallet(alice.pk, provider);
       const incrementer = new ethers.Contract(contractAddress, abi, wallet);
@@ -143,7 +138,8 @@ describe("Ethers - Deploy a Contract", function () {
       const abi = contractFile.abi;
 
       const contract = await deployContract(abi, bytecode);
-      const contractAddress = contract.address;
+      await contract.waitForDeployment();
+      const contractAddress = contract.target;
 
       const wallet = new ethers.Wallet(alice.pk, provider);
       const incrementer = new ethers.Contract(contractAddress, abi, wallet);

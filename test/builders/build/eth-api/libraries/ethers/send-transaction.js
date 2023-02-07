@@ -11,7 +11,7 @@ describe('Ethers - Send a Transaction', function () {
     },
   };
   // Create ethers provider
-  const provider = new ethers.providers.StaticJsonRpcProvider(
+  const provider = new ethers.JsonRpcProvider(
     providerRPC.dev.rpc,
     {
       chainId: providerRPC.dev.chainId,
@@ -23,15 +23,15 @@ describe('Ethers - Send a Transaction', function () {
     "address": "0xf24FF3a9CF04c71Dbc94D0b566f7A27B94566cac",
     "pk": "0x5fb92d6e98884f76de468fa3f6278f8807c48bebc13595d45af5bdc4da702133",
   }
-  const bob = new ethers.Wallet.createRandom().address;
+  const bob = ethers.Wallet.createRandom().address;
 
   describe('Check Balances -  balances.js', async () => {
     it('should return a balance for alice', async () => {
-      const balance = ethers.utils.formatEther(await provider.getBalance(alice.address));
+      const balance = ethers.formatEther(await provider.getBalance(alice.address));
       assert.equal(balance > 0, true);
     });
     it('should return a balance for bob', async () => {
-      const balance = ethers.utils.formatEther(await provider.getBalance(bob));
+      const balance = ethers.formatEther(await provider.getBalance(bob));
       assert.equal(balance, 0);
     });
   });
@@ -41,7 +41,7 @@ describe('Ethers - Send a Transaction', function () {
       const value = 10;
       const tx = {
         to: bob,
-        value: ethers.utils.parseEther(value.toString()),
+        value: ethers.parseEther(value.toString()),
       }
       const wallet = new ethers.Wallet(alice.pk, provider);
       const res = await (await wallet.sendTransaction(tx)).wait();
@@ -50,7 +50,7 @@ describe('Ethers - Send a Transaction', function () {
       assert.equal(res.status, 1);
     }).timeout(15000);
     it('should return an updated balance for bob', async () => {
-      const balance = ethers.utils.formatEther(await provider.getBalance(bob));
+      const balance = ethers.formatEther(await provider.getBalance(bob));
       assert.equal(balance, 10);
     });
   });
