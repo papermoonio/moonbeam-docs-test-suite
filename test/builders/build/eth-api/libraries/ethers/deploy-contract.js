@@ -79,13 +79,23 @@ describe("Ethers - Deploy a Contract", function () {
   });
 
   describe("Deploy Contract - deploy.js", async () => {
+    it("should deploy the contract successfully", async () => {
+      const contractFile = compileContract();
+      const bytecode = contractFile.evm.bytecode.object;
+      const abi = contractFile.abi;
+      const contract = await deployContract(abi, bytecode);
+      const res = await contract.deploymentTransaction().wait();
+
+      assert.equal(res.status, 1);
+    }).timeout(15000);
+
     it("should return the correct deployed bytecode", async () => {
       const contractFile = compileContract();
       const bytecode = contractFile.evm.bytecode.object;
       const abi = contractFile.abi;
 
       const contract = await deployContract(abi, bytecode);
-      await contract.waitForDeployment();
+      await contract.deploymentTransaction().wait();
       const deployedCode = await contract.getDeployedCode();
 
       assert.equal(deployedCode, deployedBytecode);
@@ -99,10 +109,9 @@ describe("Ethers - Deploy a Contract", function () {
       const abi = contractFile.abi;
 
       const contract = await deployContract(abi, bytecode);
-      await contract.waitForDeployment();
-      const contractAddress = contract.target;
+      const res = await contract.deploymentTransaction().wait();
 
-      const incrementer = new ethers.Contract(contractAddress, abi, provider);
+      const incrementer = new ethers.Contract(res.contractAddress, abi, provider);
 
       const data = await incrementer.number();
 
@@ -117,12 +126,10 @@ describe("Ethers - Deploy a Contract", function () {
       const abi = contractFile.abi;
 
       const contract = await deployContract(abi, bytecode);
-      await contract.waitForDeployment();
-
-      const contractAddress = contract.target;
+      const res = await contract.deploymentTransaction().wait();
 
       const wallet = new ethers.Wallet(alice.pk, provider);
-      const incrementer = new ethers.Contract(contractAddress, abi, wallet);
+      const incrementer = new ethers.Contract(res.contractAddress, abi, wallet);
 
       await (await incrementer.increment(2)).wait();
       const data = await incrementer.number();
@@ -138,11 +145,10 @@ describe("Ethers - Deploy a Contract", function () {
       const abi = contractFile.abi;
 
       const contract = await deployContract(abi, bytecode);
-      await contract.waitForDeployment();
-      const contractAddress = contract.target;
+      const res = await contract.deploymentTransaction().wait();
 
       const wallet = new ethers.Wallet(alice.pk, provider);
-      const incrementer = new ethers.Contract(contractAddress, abi, wallet);
+      const incrementer = new ethers.Contract(res.contractAddress, abi, wallet);
 
       await (await incrementer.reset()).wait();
       const data = await incrementer.number();
