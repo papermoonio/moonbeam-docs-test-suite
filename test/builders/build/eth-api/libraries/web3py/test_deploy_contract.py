@@ -38,7 +38,7 @@ def deploy_contract(abi, bytecode, web3, alice, alice_pk):
 
 class TestDeployContract(unittest.TestCase):
     def setUp(self):
-        self.web3 = Web3(Web3.HTTPProvider('http://127.0.0.1:9933'))
+        self.web3 = Web3(Web3.HTTPProvider(process.env.HTTP_RPC_ENDPOINT))
 
         # Use default account for Alice
         self.alice = "0xf24FF3a9CF04c71Dbc94D0b566f7A27B94566cac"

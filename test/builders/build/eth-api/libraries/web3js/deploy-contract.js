@@ -12,7 +12,7 @@ describe('Web3 - Deploy a Contract', function () {
 
   // Define network configurations
   const providerRPC = {
-      development: 'http://localhost:9933',
+      development: process.env.HTTP_RPC_ENDPOINT,
   };
   // Create Web3 provider
   const web3 = new Web3(providerRPC.development)
