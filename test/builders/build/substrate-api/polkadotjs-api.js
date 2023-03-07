@@ -21,7 +21,7 @@ describe("Polkadot.js API", function () {
 
   const getApi = async () => {
     // Construct API provider
-    const wsProvider = new WsProvider(process.env.WSS_RPC_ENDPOINT);
+    const wsProvider = new WsProvider("ws://localhost:9944");
     const api = await ApiPromise.create({ provider: wsProvider });
 
     return api;
@@ -36,6 +36,8 @@ describe("Polkadot.js API", function () {
 
       assert.equal(nonce, 0n);
       assert.equal(balance.free, 0n);
+
+      api.disconnect();
     });
   });
 
@@ -46,6 +48,7 @@ describe("Polkadot.js API", function () {
       const chain = await api.rpc.system.chain();
 
       assert.equal(chain, "Moonbase Development Testnet");
+      api.disconnect();
     });
     it("should return the last block number and hash", async () => {
       const api = await getApi();
@@ -55,6 +58,8 @@ describe("Polkadot.js API", function () {
       // Cannot predict the hash or block number but we can test that a value is returned
       assert.exists(lastHeader.number);
       assert.exists(lastHeader.hash);
+
+      api.disconnect();
     });
   });
 
@@ -110,6 +115,8 @@ describe("Polkadot.js API", function () {
 
       assert.exists(txHash);
       assert.equal(balance.free, 12345n);
+
+      api.disconnect();
     });
   });
 
@@ -136,6 +143,8 @@ describe("Polkadot.js API", function () {
       const info = await api.tx.utility.batch(txs).paymentInfo(aliceFromUri);
 
       expect(info.weight.refTime.toNumber()).to.be.greaterThan(0);
+
+      api.disconnect();
     });
     it("should sign and send a batch transaction successfully", async () => {
       const api = await getApi();
@@ -165,6 +174,8 @@ describe("Polkadot.js API", function () {
       assert.exists(txHash);
       assert.equal(bobBalance.free, 12345n);
       assert.equal(charlieBalance.free, 12345n);
+
+      api.disconnect();
     });
   });
 });
