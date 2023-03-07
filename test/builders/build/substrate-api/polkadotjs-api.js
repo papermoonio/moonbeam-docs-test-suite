@@ -12,8 +12,7 @@ describe("Polkadot.js API", function () {
   const alice = {
     address: "0xf24FF3a9CF04c71Dbc94D0b566f7A27B94566cac",
     pk: "0x5fb92d6e98884f76de468fa3f6278f8807c48bebc13595d45af5bdc4da702133",
-    mnemonic:
-      "bottom drive obey lake curtain smoke basket hold race lonely fit walk",
+    mnemonic: "bottom drive obey lake curtain smoke basket hold race lonely fit walk",
   };
 
   // Define index of the derivation path and the derivation path
@@ -65,19 +64,14 @@ describe("Polkadot.js API", function () {
       const keyringECDSA = new Keyring({ type: "ethereum" });
 
       // Extract Ethereum address from mnemonic
-      const newPairEth = keyringECDSA.addFromUri(
-        `${alice.mnemonic}/${ethDerPath}`
-      );
+      const newPairEth = keyringECDSA.addFromUri(`${alice.mnemonic}/${ethDerPath}`);
 
       assert.equal(newPairEth.address, alice.address);
     });
     it("should extract the private key from the mnemonic", async () => {
       // Extract private key from mnemonic
       const privateKey = u8aToHex(
-        hdEthereum(
-          mnemonicToLegacySeed(alice.mnemonic, "", false, 64),
-          ethDerPath
-        ).secretKey
+        hdEthereum(mnemonicToLegacySeed(alice.mnemonic, "", false, 64), ethDerPath).secretKey
       );
 
       assert.equal(privateKey, alice.pk);
@@ -105,7 +99,7 @@ describe("Polkadot.js API", function () {
       const bob = ethers.Wallet.createRandom().address;
 
       // Form the transaction
-      const tx = api.tx.balances.transfer(bob, 12345);
+      const tx = api.tx.balances.transfer(bob, 12345n);
 
       // Sign and send the transaction
       const txHash = await tx.signAndSend(aliceFromUri);
@@ -115,7 +109,7 @@ describe("Polkadot.js API", function () {
       const { data: balance } = await api.query.system.account(bob);
 
       assert.exists(txHash);
-      assert.equal(balance.free, 12345);
+      assert.equal(balance.free, 12345n);
     });
   });
 
@@ -133,8 +127,8 @@ describe("Polkadot.js API", function () {
 
       // Construct a list of transactions to batch
       const txs = [
-        api.tx.balances.transfer(bob, 12345),
-        api.tx.balances.transfer(charlie, 12345),
+        api.tx.balances.transfer(bob, 12345n),
+        api.tx.balances.transfer(charlie, 12345n),
       ];
 
       // Estimate the fees as RuntimeDispatchInfo, using the signer (either
@@ -156,8 +150,8 @@ describe("Polkadot.js API", function () {
 
       // Construct a list of transactions to batch
       const txs = [
-        api.tx.balances.transfer(bob, 12345),
-        api.tx.balances.transfer(charlie, 12345),
+        api.tx.balances.transfer(bob, 12345n),
+        api.tx.balances.transfer(charlie, 12345n),
       ];
 
       // Construct the batch and send the transactions
@@ -169,8 +163,8 @@ describe("Polkadot.js API", function () {
       const { data: charlieBalance } = await api.query.system.account(charlie);
 
       assert.exists(txHash);
-      assert.equal(bobBalance.free, 12345);
-      assert.equal(charlieBalance.free, 12345);
+      assert.equal(bobBalance.free, 12345n);
+      assert.equal(charlieBalance.free, 12345n);
     });
   });
 });
