@@ -4,7 +4,7 @@ import Web3 from "web3";
 describe('Web3 - Send a Transaction', function () {
   // Define network configurations
   const providerRPC = {
-    development: 'http://localhost:9933',
+    development: process.env.HTTP_RPC_ENDPOINT,
   };
   // Create Web3 provider
   const web3 = new Web3(providerRPC.development);

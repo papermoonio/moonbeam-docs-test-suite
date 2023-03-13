@@ -6,7 +6,7 @@ describe('Ethers - Send a Transaction', function () {
   const providerRPC = {
     dev: {
       name: 'moonbeam-development',
-      rpc: process.env.RPC_ENDPOINT,
+      rpc: process.env.HTTP_RPC_ENDPOINT,
       chainId: 1281, // 0x501 in hex,
     },
   };
