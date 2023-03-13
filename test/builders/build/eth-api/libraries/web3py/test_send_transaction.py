@@ -7,7 +7,7 @@ from web3.gas_strategies.rpc import rpc_gas_price_strategy
 
 class TestSendTransaction(unittest.TestCase):
     def setUp(self):
-        self.web3 = Web3(Web3.HTTPProvider(process.env.HTTP_RPC_ENDPOINT))
+        self.web3 = Web3(Web3.HTTPProvider('http://127.0.0.1:9944'))
 
         # Use default account for Alice
         self.alice = "0xf24FF3a9CF04c71Dbc94D0b566f7A27B94566cac"
