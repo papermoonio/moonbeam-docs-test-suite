@@ -1,4 +1,3 @@
-from turtle import bye
 from web3 import Web3
 import unittest
 import solcx
