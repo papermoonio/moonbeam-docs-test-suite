@@ -1,6 +1,6 @@
 import { assert } from "chai";
 import { ethers } from "ethers";
-import abi from "../../../../contracts/xcm-utils-abi.js";
+import abi from "../../../../../contracts/xcm-utils-abi.js";
 
 describe("Ethers - Send & Execute XCM Messages", function () {
   const alice = {
