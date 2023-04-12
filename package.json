@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "docker-run": "docker run -d --rm --name moonbeam_development -p 9944:9944 -p 9933:9933 purestake/moonbeam:$(grep MOONBEAM_CLIENT_VERSION .env | cut -d '=' -f2) --dev --ws-external --rpc-external",
+    "install-python-packages": "pip install -r requirements.txt",
     "local-docker-run": "docker run --rm --name moonbeam_development --network host purestake/moonbeam:v0.30.0 --dev",
     "local-docker-run-macos": "docker run --rm --name moonbeam_development -p 9944:9944 purestake/moonbeam:v0.30.0 --dev --ws-external --rpc-external",
+    "prettier": "npx prettier --write .",
     "test": "mocha -r dotenv/config 'test/**/*.js' && python3 test/run_python_tests.py",
-    "update-packages": "npx npm-check-updates -u --reject solc && npm install --silent",
-    "install-python-packages": "pip install -r requirements.txt"
+    "update-packages": "npx npm-check-updates -u --reject solc && npm install --silent"
   },
   "author": "",
   "license": "ISC",
