@@ -11,7 +11,7 @@ class TestDeployContract(unittest.TestCase):
         self.alice = "0xf24FF3a9CF04c71Dbc94D0b566f7A27B94566cac"
         self.alice_pk = "0x5fb92d6e98884f76de468fa3f6278f8807c48bebc13595d45af5bdc4da702133"
 
-        json_file = open("contracts/incrementer-abi.json")
+        json_file = open("contracts/xcm-utils-abi.json")
         abi_json = json.load(json_file)
 
         self.xcm_utils = self.web3.eth.contract(
