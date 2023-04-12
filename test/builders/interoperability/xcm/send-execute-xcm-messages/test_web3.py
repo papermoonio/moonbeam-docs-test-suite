@@ -23,7 +23,7 @@ class TestDeployContract(unittest.TestCase):
     def test_execute_xcm_message(self):
         # This encoded calldata is different from example on docs site as it sends 10 DEV
         encodedCalldata = "0x02080004000001040300130000e8890423c78a0d010004000103003cd0a705a2dc65e5b1e1205896baa2be8a07c6e0"
-        maxWeight = "1000000000"
+        maxWeight = 1000000000
 
         before_tx_balance = self.web3.fromWei(
             self.web3.eth.get_balance(self.alice), "ether")
