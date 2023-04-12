@@ -1,18 +1,18 @@
-import { assert, expect } from "chai";
-import { ethers } from "ethers";
-import { ApiPromise, WsProvider } from "@polkadot/api";
-import { u8aToHex } from "@polkadot/util";
-import { mnemonicToLegacySeed, hdEthereum } from "@polkadot/util-crypto";
-import Keyring from "@polkadot/keyring";
+import { assert, expect } from 'chai';
+import { ethers } from 'ethers';
+import { ApiPromise, WsProvider } from '@polkadot/api';
+import { u8aToHex } from '@polkadot/util';
+import { mnemonicToLegacySeed, hdEthereum } from '@polkadot/util-crypto';
+import Keyring from '@polkadot/keyring';
 
 /* These tests don't rely on the output of the calls, just that the calls
 continue to work as expected */
 
-describe("Polkadot.js API", function () {
+describe('Polkadot.js API', function () {
   const alice = {
-    address: "0xf24FF3a9CF04c71Dbc94D0b566f7A27B94566cac",
-    pk: "0x5fb92d6e98884f76de468fa3f6278f8807c48bebc13595d45af5bdc4da702133",
-    mnemonic: "bottom drive obey lake curtain smoke basket hold race lonely fit walk",
+    address: '0xf24FF3a9CF04c71Dbc94D0b566f7A27B94566cac',
+    pk: '0x5fb92d6e98884f76de468fa3f6278f8807c48bebc13595d45af5bdc4da702133',
+    mnemonic: 'bottom drive obey lake curtain smoke basket hold race lonely fit walk',
   };
 
   // Define index of the derivation path and the derivation path
@@ -21,14 +21,14 @@ describe("Polkadot.js API", function () {
 
   const getApi = async () => {
     // Construct API provider
-    const wsProvider = new WsProvider("ws://localhost:9944");
+    const wsProvider = new WsProvider('ws://localhost:9944');
     const api = await ApiPromise.create({ provider: wsProvider });
 
     return api;
   };
 
-  describe("Querying for Information - State Queries", async () => {
-    it("should return the account balance and nonce", async () => {
+  describe('Querying for Information - State Queries', async () => {
+    it('should return the account balance and nonce', async () => {
       const api = await getApi();
 
       const bob = ethers.Wallet.createRandom().address;
@@ -41,16 +41,16 @@ describe("Polkadot.js API", function () {
     });
   });
 
-  describe("Querying for Information - RPC Queries", async () => {
-    it("should return the chain name", async () => {
+  describe('Querying for Information - RPC Queries', async () => {
+    it('should return the chain name', async () => {
       const api = await getApi();
 
       const chain = await api.rpc.system.chain();
 
-      assert.equal(chain, "Moonbase Development Testnet");
+      assert.equal(chain, 'Moonbase Development Testnet');
       api.disconnect();
     });
-    it("should return the last block number and hash", async () => {
+    it('should return the last block number and hash', async () => {
       const api = await getApi();
 
       const lastHeader = await api.rpc.chain.getHeader();
@@ -63,27 +63,27 @@ describe("Polkadot.js API", function () {
     });
   });
 
-  describe("Keyrings - Adding Accounts", async () => {
-    it("should extract the ethereum address from the mnemonic", async () => {
+  describe('Keyrings - Adding Accounts', async () => {
+    it('should extract the ethereum address from the mnemonic', async () => {
       // Create a keyring instance
-      const keyringECDSA = new Keyring({ type: "ethereum" });
+      const keyringECDSA = new Keyring({ type: 'ethereum' });
 
       // Extract Ethereum address from mnemonic
       const newPairEth = keyringECDSA.addFromUri(`${alice.mnemonic}/${ethDerPath}`);
 
       assert.equal(newPairEth.address, alice.address);
     });
-    it("should extract the private key from the mnemonic", async () => {
+    it('should extract the private key from the mnemonic', async () => {
       // Extract private key from mnemonic
       const privateKey = u8aToHex(
-        hdEthereum(mnemonicToLegacySeed(alice.mnemonic, "", false, 64), ethDerPath).secretKey
+        hdEthereum(mnemonicToLegacySeed(alice.mnemonic, '', false, 64), ethDerPath).secretKey
       );
 
       assert.equal(privateKey, alice.pk);
     });
-    it("should extract the address from the private key", async () => {
+    it('should extract the address from the private key', async () => {
       // Create a keyring instance
-      const keyringECDSA = new Keyring({ type: "ethereum" });
+      const keyringECDSA = new Keyring({ type: 'ethereum' });
 
       // Extract address from private key
       const otherPair = keyringECDSA.addFromUri(alice.pk);
@@ -92,12 +92,12 @@ describe("Polkadot.js API", function () {
     });
   });
 
-  describe("Transactions - Sending Basic Transactions", async () => {
-    it("should sign and send a transaction successfully", async () => {
+  describe('Transactions - Sending Basic Transactions', async () => {
+    it('should sign and send a transaction successfully', async () => {
       const api = await getApi();
 
       // Create a keyring instance
-      const keyring = new Keyring({ type: "ethereum" });
+      const keyring = new Keyring({ type: 'ethereum' });
 
       // Initialize wallet key pairs
       const aliceFromUri = keyring.addFromUri(alice.pk);
@@ -120,12 +120,12 @@ describe("Polkadot.js API", function () {
     });
   });
 
-  describe("Transactions - Batching Transactions", async () => {
-    it("should estimate the fees for a batch transaction", async () => {
+  describe('Transactions - Batching Transactions', async () => {
+    it('should estimate the fees for a batch transaction', async () => {
       const api = await getApi();
 
       // Create a keyring instance
-      const keyring = new Keyring({ type: "ethereum" });
+      const keyring = new Keyring({ type: 'ethereum' });
 
       // Initialize wallet key pairs
       const aliceFromUri = keyring.addFromUri(alice.pk);
@@ -146,11 +146,11 @@ describe("Polkadot.js API", function () {
 
       api.disconnect();
     });
-    it("should sign and send a batch transaction successfully", async () => {
+    it('should sign and send a batch transaction successfully', async () => {
       const api = await getApi();
 
       // Create a keyring instance
-      const keyring = new Keyring({ type: "ethereum" });
+      const keyring = new Keyring({ type: 'ethereum' });
 
       // Initialize wallet key pairs
       const aliceFromUri = keyring.addFromUri(alice.pk);

@@ -26,5 +26,8 @@
     "solc": "^0.8.0",
     "web3": "^1.8.2"
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "prettier": "2.8.7"
+  }
 }
