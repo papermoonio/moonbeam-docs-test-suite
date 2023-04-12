@@ -1,9 +1,13 @@
 import unittest
 import sys
+import os
 
 loader = unittest.TestLoader()
-web3py_tests = loader.discover("test/builders/build/eth-api/libraries/web3py", pattern="test_*.py")
-send_execute_xcm_messages_tests = loader.discover("test/builders/interoperability/xcm/send-execute-xcm-messages", pattern="test_*.py")
+
+dir_path = os.path.dirname(os.path.realpath(__file__))
+
+web3py_tests = loader.discover("test/builders/build/eth-api/libraries/web3py", top_level_dir=dir_path)
+send_execute_xcm_messages_tests = loader.discover("test/builders/interoperability/xcm/send-execute-xcm-messages", top_level_dir=dir_path)
 
 def suite():
     testSuite = unittest.TestSuite()
