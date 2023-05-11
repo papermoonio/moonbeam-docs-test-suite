@@ -10,6 +10,7 @@ def compile_contract():
     solcx.install_solc()
     solcx.set_solc_version_pragma('pragma solidity ^0.8.0')
 
+    # TODO: remove specific solc_version once PUSH0 opcodes are supported in Moonbeam
     temp_file = solcx.compile_files(
         [ROOT_DIR + '/contracts/Incrementer.sol'], output_values=['abi', 'bin'], solc_version='0.8.18')
 
