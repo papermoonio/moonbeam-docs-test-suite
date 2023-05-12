@@ -10,7 +10,7 @@
     "local-docker-run-macos": "docker run --rm --name moonbeam_development -p 9944:9944 purestake/moonbeam:v0.31.1 --dev --ws-external --rpc-external",
     "prettier": "npx prettier --write .",
     "test": "mocha -r dotenv/config 'test/**/*.js' && python3 test/run_python_tests.py",
-    "update-packages": "npx npm-check-updates -u --reject solc && npm install --silent"
+    "update-packages": "npx npm-check-updates -u && npm install --silent"
   },
   "author": "",
   "license": "ISC",
@@ -24,8 +24,8 @@
     "ethers": "^6.3.0",
     "fs": "^0.0.1-security",
     "mocha": "^10.2.0",
-    "solc": "^0.8.0",
-    "web3": "^1.9.0"
+    "solc": "^0.8.20",
+    "web3": "^1.10.0"
   },
   "type": "module",
   "devDependencies": {
