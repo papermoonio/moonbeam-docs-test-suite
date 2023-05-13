@@ -40,6 +40,7 @@ describe('Ethers - Deploy a Contract', function () {
             '*': ['*'],
           },
         },
+        evmVersion: 'london',
       },
     };
 
