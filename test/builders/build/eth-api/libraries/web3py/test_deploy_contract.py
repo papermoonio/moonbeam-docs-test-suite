@@ -104,7 +104,7 @@ class TestDeployContract(unittest.TestCase):
         incrementer = self.web3.eth.contract(address=contract_address, abi=abi)
 
         value = 3
-        increment_tx = incrementer.functions.increment(value).buildTransaction(
+        increment_tx = incrementer.functions.increment(value).build_transaction(
             {
                 'from': self.alice,
                 'nonce': self.web3.eth.get_transaction_count(self.alice),
@@ -130,7 +130,7 @@ class TestDeployContract(unittest.TestCase):
 
         incrementer = self.web3.eth.contract(address=contract_address, abi=abi)
 
-        increment_tx = incrementer.functions.reset().buildTransaction(
+        increment_tx = incrementer.functions.reset().build_transaction(
             {
                 'from': self.alice,
                 'nonce': self.web3.eth.get_transaction_count(self.alice),
