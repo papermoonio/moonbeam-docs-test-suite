@@ -18,12 +18,12 @@ class TestSendTransaction(unittest.TestCase):
         self.bob = Account.from_key("0x" + random).address
 
     def test_alices_balance(self):
-        alices_balance = self.web3.fromWei(
+        alices_balance = self.web3.from_wei(
             self.web3.eth.get_balance(self.alice), "ether")
         self.assertGreater(alices_balance, 0)
 
     def test_bobs_balance(self):
-        bobs_balance = self.web3.fromWei(
+        bobs_balance = self.web3.from_wei(
             self.web3.eth.get_balance(self.bob), "ether")
         self.assertEqual(bobs_balance, 0)
 
@@ -36,7 +36,7 @@ class TestSendTransaction(unittest.TestCase):
                 "gasPrice": self.web3.eth.generate_gas_price(),
                 "gas": 21000,
                 "to": self.bob,
-                "value": self.web3.toWei("1", "ether"),
+                "value": self.web3.to_wei("1", "ether"),
             },
             self.alice_pk,
         )
@@ -45,7 +45,7 @@ class TestSendTransaction(unittest.TestCase):
 
         self.assertEqual(tx_receipt["status"], 1)
 
-        bobs_balance = self.web3.fromWei(
+        bobs_balance = self.web3.from_wei(
             self.web3.eth.get_balance(self.bob), "ether")
         self.assertEqual(bobs_balance, 1)
 
