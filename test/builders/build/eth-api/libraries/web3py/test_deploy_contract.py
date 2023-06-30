@@ -7,13 +7,11 @@ import json
 
 def compile_contract():
     ROOT_DIR = os.path.abspath(os.curdir)
-    solc_version = '0.8.19'
-    solcx.install_solc(solc_version)
+    solcx.install_solc()
     solcx.set_solc_version_pragma('pragma solidity ^0.8.0')
 
-    # TODO: remove specific solc_version once PUSH0 opcodes are supported in Moonbeam
     temp_file = solcx.compile_files(
-        [ROOT_DIR + '/contracts/Incrementer.sol'], output_values=['abi', 'bin'], solc_version=solc_version)
+        [ROOT_DIR + '/contracts/Incrementer.sol'], output_values=['abi', 'bin'])
 
     abi = temp_file['contracts/Incrementer.sol:Incrementer']['abi']
     bytecode = temp_file['contracts/Incrementer.sol:Incrementer']['bin']

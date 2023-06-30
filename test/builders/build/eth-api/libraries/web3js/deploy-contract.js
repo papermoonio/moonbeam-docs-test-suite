@@ -33,7 +33,6 @@ describe('Web3 - Deploy a Contract', function () {
             '*': ['*'],
           },
         },
-        evmVersion: 'london',
       },
     };
 
