@@ -1,6 +1,6 @@
 import { assert, expect } from 'chai';
 import incrementerAbi from '../../../../../../contracts/incrementer-abi.json' assert { type: 'json' };
-import { Web3 } from 'web3';
+import Web3 from 'web3';
 import fs from 'fs';
 import solc from 'solc';
 
@@ -52,7 +52,6 @@ describe('Web3 - Deploy a Contract', function () {
     });
     const createTransaction = await web3.eth.accounts.signTransaction(
       {
-        from: alice.address,
         data: incrementerTx.encodeABI(),
         gas: await incrementerTx.estimateGas(),
         gasPrice: await web3.eth.getGasPrice(),
