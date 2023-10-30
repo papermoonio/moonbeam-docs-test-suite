@@ -33,13 +33,15 @@ describe('Web3 - Send a Transaction', function () {
         to: bob,
         value: web3.utils.toWei('1', 'ether'),
         gas: 21000,
+        gasPrice: await web3.eth.getGasPrice(),
+        nonce: await web3.eth.getTransactionCount(alice.address),
       };
 
       const createTransaction = await web3.eth.accounts.signTransaction(tx, alice.pk);
       const createReceipt = await web3.eth.sendSignedTransaction(createTransaction.rawTransaction);
 
       // the status of a transaction is 1 if successful
-      assert.equal(createReceipt.status, true);
+      assert.equal(createReceipt.status, 1n);
     }).timeout(15000);
     it('should return an updated balance for bob', async () => {
       const balance = web3.utils.fromWei(await web3.eth.getBalance(bob), 'ether');

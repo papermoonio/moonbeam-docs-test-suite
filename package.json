@@ -7,7 +7,7 @@
     "docker-run": "docker run -d --rm --name moonbeam_development -p 9944:9944 -p 9933:9933 purestake/moonbeam:$(grep MOONBEAM_CLIENT_VERSION .env | cut -d '=' -f2) --dev --ws-external --rpc-external",
     "install-python-packages": "pip install -r requirements.txt",
     "local-docker-run": "docker run --rm --name moonbeam_development --network host purestake/moonbeam:v0.32.1 --dev",
-    "local-docker-run-macos": "docker run --rm --name moonbeam_development -p 9944:9944 purestake/moonbeam:v0.32.1 --dev --ws-external --rpc-external",
+    "local-docker-run-macos": "docker run --rm --name moonbeam_development -p 9944:9944 purestake/moonbeam:v0.32.1 --dev --rpc-external --ws-external",
     "prettier": "npx prettier --write .",
     "test": "mocha -r dotenv/config 'test/**/*.js' && python3 test/run_python_tests.py",
     "update-packages": "npx npm-check-updates -u && npm install --silent"
@@ -15,20 +15,20 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@polkadot/api": "^10.9.1",
-    "@polkadot/keyring": "^12.3.2",
-    "@polkadot/util": "^12.3.2",
-    "@polkadot/util-crypto": "^12.3.2",
-    "chai": "^4.3.7",
+    "@polkadot/api": "^10.10.1",
+    "@polkadot/keyring": "^12.5.1",
+    "@polkadot/util": "^12.5.1",
+    "@polkadot/util-crypto": "^12.5.1",
+    "chai": "^4.3.10",
     "dotenv": "^16.3.1",
-    "ethers": "^6.6.0",
+    "ethers": "^6.8.0",
     "fs": "^0.0.1-security",
     "mocha": "^10.2.0",
-    "solc": "^0.8.20",
-    "web3": "^1.10.0"
+    "solc": "^0.8.22",
+    "web3": "^4.2.1"
   },
   "type": "module",
   "devDependencies": {
-    "prettier": "2.8.8"
+    "prettier": "3.0.3"
   }
 }
