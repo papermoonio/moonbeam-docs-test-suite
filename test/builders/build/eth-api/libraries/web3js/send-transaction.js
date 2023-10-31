@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import Web3 from 'web3';
+import { Web3 } from 'web3';
 
 describe('Web3 - Send a Transaction', function () {
   // Define network configurations
