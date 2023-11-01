@@ -1,6 +1,6 @@
 import { assert, expect } from 'chai';
+import { Web3 } from 'web3';
 import incrementerAbi from '../../../../../../contracts/incrementer-abi.json' assert { type: 'json' };
-import Web3 from 'web3';
 import fs from 'fs';
 import solc from 'solc';
 
