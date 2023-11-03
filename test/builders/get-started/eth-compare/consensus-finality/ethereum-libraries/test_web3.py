@@ -8,6 +8,7 @@ from web3.gas_strategies.rpc import rpc_gas_price_strategy
 
 load_dotenv()
 
+
 class TestConsensysFinalityWeb3py(unittest.TestCase):
     def setUp(self):
         self.web3 = Web3(Web3.HTTPProvider(os.getenv("MOONBASE_HTTP_RPC_ENDPOINT")))

@@ -9,6 +9,7 @@ from web3.gas_strategies.rpc import rpc_gas_price_strategy
 
 load_dotenv()
 
+
 class TestConsensysFinalityPySubstrateInterface(unittest.TestCase):
     def setUp(self):
         self.web3 = Web3(Web3.HTTPProvider(os.getenv("MOONBASE_HTTP_RPC_ENDPOINT")))
@@ -44,7 +45,7 @@ class TestConsensysFinalityPySubstrateInterface(unittest.TestCase):
         tx_hash = self.web3.eth.send_raw_transaction(tx_create.rawTransaction)
         self.web3.eth.wait_for_transaction_receipt(tx_hash)
         return self.web3.to_hex(tx_hash)
-    
+
     def get_finalized_block_number(self):
         # Get the latest finalized block header of the chain
         finalized_block_header = self.moonbeam_API_provider.get_block_header(
