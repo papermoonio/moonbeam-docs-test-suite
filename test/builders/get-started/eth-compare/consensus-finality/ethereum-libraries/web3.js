@@ -1,7 +1,7 @@
 import { assert } from 'chai';
 import { Web3 } from 'web3';
 
-describe('Consensus & Finality - Finality with Ethereum Libraries', function () {
+describe('Consensus & Finality - Finality with Ethereum Libraries', () => {
   // Create Web3 provider
   const web3 = new Web3(process.env.MOONBASE_HTTP_RPC_ENDPOINT);
 
@@ -70,7 +70,7 @@ describe('Consensus & Finality - Finality with Ethereum Libraries', function () 
   };
 
   describe('Check Transaction Finality with Etheruem Libraries -  web3.js', async () => {
-    it('should compare the last finalized block number with the transaction block number of a recently sent transaction', async function () {
+    it('should compare the last finalized block number with the transaction block number of a recently sent transaction', async () => {
       // Send a transaction
       const txHash = await sendTx();
       // Get the last finalized block number
@@ -80,7 +80,7 @@ describe('Consensus & Finality - Finality with Ethereum Libraries', function () 
       // The transaction should not yet be finalized, as the transaction was just sent
       assert.isFalse(finalizedBlockNumber >= txBlockNumber);
     }).timeout(50000);
-    it('should compare the last finalized block number with the transaction block number of a finalized transaction', async function () {
+    it('should compare the last finalized block number with the transaction block number of a finalized transaction', async () => {
       // Get the last finalized block number
       const finalizedBlockNumber = await getFinalizedBlockNumber();
       // Get the transaction block number
@@ -91,7 +91,7 @@ describe('Consensus & Finality - Finality with Ethereum Libraries', function () 
   });
 
   describe('Check Transaction Finality with Etheruem Libraries -  custom-rpc/web3.js', async () => {
-    it('should check if the transaction block hash of a recently sent transaction has been finalized using moon_isBlockFinalized', async function () {
+    it('should check if the transaction block hash of a recently sent transaction has been finalized using moon_isBlockFinalized', async () => {
       // Send a transaction
       const txHash = await sendTx();
       // Get the block hash of the transaction
@@ -103,7 +103,7 @@ describe('Consensus & Finality - Finality with Ethereum Libraries', function () 
       // The transaction should not yet be finalized, as the transaction was just sent
       assert.isFalse(isFinalized.result);
     }).timeout(50000);
-    it('should check if the transaction block hash of a recently sent transaction has been finalized using moon_isBlockFinalized', async function () {
+    it('should check if the transaction block hash of a recently sent transaction has been finalized using moon_isBlockFinalized', async () => {
       // Get the block hash of the transaction
       const blockHash = await getTransactionBlockHash(finalizedTxHash);
       // Use the block hash to check if the block is finalized

@@ -2,7 +2,7 @@ import { assert } from 'chai';
 import { ethers } from 'ethers';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 
-describe('Consensus & Finality - Finality with Substrate Libraries', function () {
+describe('Consensus & Finality - Finality with Substrate Libraries', () => {
   const alice = {
     address: process.env.MOONBASE_TEST_PUBLIC_KEY,
     pk: process.env.MOONBASE_TEST_PRIVATE_KEY,
@@ -52,7 +52,7 @@ describe('Consensus & Finality - Finality with Substrate Libraries', function ()
       // The transaction should not yet be finalized, as the transaction was just sent
       assert.isFalse(finalizedBlockNumber >= txBlockNumber);
     }).timeout(50000);
-    it('should compare the last finalized block number with the transaction block number of a finalized transaction', async function () {
+    it('should compare the last finalized block number with the transaction block number of a finalized transaction', async () => {
       const api = await getApi();
       // Get the last finalized block number
       const finalizedBlockNumber = await getFinalizedBlockNumber(api);
