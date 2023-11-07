@@ -99,7 +99,7 @@ class TestConsensysFinalityWeb3py(unittest.TestCase):
         # Send a transaction
         tx_hash = self.send_tx()
         # Use the transaction hash to check if the transaction is finalized
-        is_finalized = self.custom_web3_request("moon_isTxFinalized", [tx_hash])
+        is_finalized = self.custom_web3_request("moon_isTxFinalized", [self.web3.to_hex(tx_hash)])
         # The transaction should not yet be finalized, as the transaction was just sent
         self.assertFalse(is_finalized["result"])
 
