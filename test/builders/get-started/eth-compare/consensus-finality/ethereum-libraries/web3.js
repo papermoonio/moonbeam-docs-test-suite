@@ -69,7 +69,7 @@ describe('Consensus & Finality - Finality with Ethereum Libraries', () => {
     });
   };
 
-  describe('Check Transaction Finality with Etheruem Libraries -  web3.js', async () => {
+  describe('Check Transaction Finality with Etheruem Libraries - web3.js', async () => {
     it('should compare the last finalized block number with the transaction block number of a recently sent transaction', async () => {
       // Send a transaction
       const txHash = await sendTx();
@@ -90,7 +90,7 @@ describe('Consensus & Finality - Finality with Ethereum Libraries', () => {
     }).timeout(15000);
   });
 
-  describe('Check Transaction Finality with Etheruem Libraries -  custom-rpc/web3.js', async () => {
+  describe('Check Transaction Finality with Etheruem Libraries - custom-rpc/block/web3.js', async () => {
     it('should check if the transaction block hash of a recently sent transaction has been finalized using moon_isBlockFinalized', async () => {
       // Send a transaction
       const txHash = await sendTx();
@@ -109,6 +109,27 @@ describe('Consensus & Finality - Finality with Ethereum Libraries', () => {
       // Use the block hash to check if the block is finalized
       const isFinalized = await customWeb3Request(web3.currentProvider, 'moon_isBlockFinalized', [
         blockHash,
+      ]);
+      // The transaction should not be finalized, as it is an older transaction hash
+      assert.isTrue(isFinalized.result);
+    }).timeout(50000);
+  });
+
+  describe('Check Transaction Finality with Etheruem Libraries - custom-rpc/tx/web3.js', async () => {
+    it('should check if the transaction block hash of a recently sent transaction has been finalized using moon_isTxFinalized', async () => {
+      // Send a transaction
+      const txHash = await sendTx();
+      // Use the transaction hash to check if the transaction is finalized
+      const isFinalized = await customWeb3Request(web3.currentProvider, 'moon_isTxFinalized', [
+        txHash,
+      ]);
+      // The transaction should not yet be finalized, as the transaction was just sent
+      assert.isFalse(isFinalized.result);
+    }).timeout(50000);
+    it('should check if the transaction block hash of a recently sent transaction has been finalized using moon_isTxFinalized', async () => {
+      // Use the transaction hash to check if the transaction is finalized
+      const isFinalized = await customWeb3Request(web3.currentProvider, 'moon_isTxFinalized', [
+        finalizedTxHash,
       ]);
       // The transaction should not be finalized, as it is an older transaction hash
       assert.isTrue(isFinalized.result);

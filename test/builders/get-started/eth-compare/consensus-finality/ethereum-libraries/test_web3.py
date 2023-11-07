@@ -94,6 +94,20 @@ class TestConsensysFinalityWeb3py(unittest.TestCase):
         is_finalized = self.custom_web3_request("moon_isBlockFinalized", [block_hash])
         # The transaction should be finalized, as it is an older transaction
         self.assertTrue(is_finalized["result"])
+    
+    def test_moon_isTxFinalized_recently_sent_tx(self):
+        # Send a transaction
+        tx_hash = self.send_tx()
+        # Use the transaction hash to check if the transaction is finalized
+        is_finalized = self.custom_web3_request("moon_isTxFinalized", [tx_hash])
+        # The transaction should not yet be finalized, as the transaction was just sent
+        self.assertFalse(is_finalized["result"])
+
+    def test_moon_isTxFinalized_finalized_tx(self):
+        # Use the transaction hash to check if the transaction is finalized
+        is_finalized = self.custom_web3_request("moon_isTxFinalized", [self.finalized_tx])
+        # The transaction should be finalized, as it is an older transaction
+        self.assertTrue(is_finalized["result"])
 
     def tearDown(self) -> None:
         return super().tearDown()
