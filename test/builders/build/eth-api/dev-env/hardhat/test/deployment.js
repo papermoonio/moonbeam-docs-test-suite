@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 
 describe('Using Hardhat to Deploy to Moonbeam', () => {
-  describe('Deploying the Contract', () => {
+  describe('Deploy the Contract', () => {
     it('should deploy the contract successfully', async () => {
       // Deploy the contract
       const Box = await ethers.getContractFactory('Box');
