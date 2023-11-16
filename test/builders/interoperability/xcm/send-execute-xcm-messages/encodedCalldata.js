@@ -14,7 +14,7 @@ describe('Encoded Calldata - Send & Execute XCM Messages', function () {
     it('should generate the SCALE encoded calldata', async () => {
       const devMultiLocation = { parents: 0, interior: { X1: { PalletInstance: 3 } } };
       const amountToWithdraw = BigInt(1 * 10 ** 17); // This example uses 0.1 DEV
-      const maxWeight = '1000000000';
+      const maxWeight = { refTime: 400000000n, proofSize: 14484n };
       const bob = '0x3Cd0A705a2DC65e5b1E1205896BaA2be8A07c6e0';
 
       const instr1 = {
@@ -27,16 +27,15 @@ describe('Encoded Calldata - Send & Execute XCM Messages', function () {
       };
       const instr2 = {
         DepositAsset: {
-          assets: { Wild: 'All' },
-          max_assets: 1,
+          assets: { Wild: { AllCounted: 1 } },
           beneficiary: {
             parents: 0,
-            interior: { X1: { AccountKey20: { network: 'Any', key: bob } } },
+            interior: { X1: { AccountKey20: { key: bob } } },
           },
         },
       };
 
-      const xcmMessage = { V2: [instr1, instr2] };
+      const xcmMessage = { V3: [instr1, instr2] };
 
       const api = await getApi();
       const tx = api.tx.polkadotXcm.execute(xcmMessage, maxWeight);
@@ -44,7 +43,7 @@ describe('Encoded Calldata - Send & Execute XCM Messages', function () {
 
       // SCALE encoded calldata from Polkadot.js Apps
       const polkadotAppsEncodedCalldata =
-        '0x1c03020800040000010403001300008a5d784563010d010004000103003cd0a705a2dc65e5b1e1205896baa2be8a07c6e000ca9a3b00000000';
+        '0x1c03030800040000010403001300008a5d784563010d010204000103003cd0a705a2dc65e5b1e1205896baa2be8a07c6e002105e5f51e2';
       assert.equal(polkadotAppsEncodedCalldata, encodedCall);
 
       api.disconnect();
@@ -65,33 +64,32 @@ describe('Encoded Calldata - Send & Execute XCM Messages', function () {
         ],
       };
       const instr2 = {
-        BuyExecution: {
-          fees: {
+        BuyExecution: [
+          {
             id: { Concrete: relayChainMultilocation },
             fun: { Fungible: amount },
-            weightLimit: 'Unlimited',
           },
-        },
+          { Unlimited: null },
+        ],
       };
       const instr3 = {
         DepositAsset: {
           assets: { Wild: 'All' },
-          max_assets: 1,
           beneficiary: {
             parents: 1,
-            interior: { X1: { AccountId32: { network: 'Any', id: bob } } },
+            interior: { X1: { AccountId32: { id: bob } } },
           },
         },
       };
 
-      const xcmMessage = { V2: [instr1, instr2, instr3] };
+      const xcmMessage = { V3: [instr1, instr2, instr3] };
       const api = await getApi();
 
-      const tx = api.tx.polkadotXcm.execute(xcmMessage, '0');
+      const tx = api.tx.polkadotXcm.execute(xcmMessage, { refTime: 0, proofSize: 0 });
       const encodedCall = tx.method.toHex();
       // SCALE encoded calldata from Polkadot.js Apps
       const polkadotAppsEncodedCalldata =
-        '0x1c03020c000400010000070010a5d4e81300010000070010a5d4e8000d010004010101000c36e9ba26fa63c60ec728fe75fe57b86a450d94e7fee7f9f9eddd0d3f400d670000000000000000';
+        '0x1c03030c000400010000070010a5d4e81300010000070010a5d4e8000d0100010101000c36e9ba26fa63c60ec728fe75fe57b86a450d94e7fee7f9f9eddd0d3f400d670000';
       assert.equal(polkadotAppsEncodedCalldata, encodedCall);
 
       api.disconnect();
