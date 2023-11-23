@@ -4,7 +4,7 @@ This repository contains tests for the tutorials found on the [Moonbeam docs](ht
 
 ## How & When the Tests are Run
 
-Before the tests are run, all of the dependencies listed in the `package.json` file of this repo will be upgraded and installed to the latest version available. Once complete, the tests will run. The tests are run against a [Moonbeam development node](http://127.0.0.1:8000/builders/get-started/networks/moonbeam-dev/). When the tests have completed, the development node is stopped. As a result, a fresh development node is used every time the tests are run.
+Before the tests are run, all of the dependencies listed in the `package.json` file of this repo will be upgraded and installed to the latest version available. Once complete, the tests will run. The tests are run against a [Moonbeam development node](https://docs.moonbeam.network/builders/get-started/networks/moonbeam-dev/). When the tests have completed, the development node is stopped. As a result, a fresh development node is used every time the tests are run.
 
 Only the tests on the `main` branch will be checked.
 
