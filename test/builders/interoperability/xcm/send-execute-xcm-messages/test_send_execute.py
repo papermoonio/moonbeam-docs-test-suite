@@ -34,7 +34,7 @@ class TestSendExecuteXcmMessages(unittest.TestCase):
         before_tx_balance = self.web3.eth.get_balance(bob)
 
         # Create and send the extrinsic
-        encoded_calldata = "0x02080004000001040300130000e8890423c78a0d010004000103003cd0a705a2dc65e5b1e1205896baa2be8a07c6e0"
+        encoded_calldata = "0x030800040000010403001300008a5d784563010d010204000103003cd0a705a2dc65e5b1e1205896baa2be8a07c6e0"
         # Modify the calldata to use the randomly generated account as the destination account instead
         address_from_docs_example = "3cd0a705a2dc65e5b1e1205896baa2be8a07c6e0"
         encoded_calldata = encoded_calldata.replace(
