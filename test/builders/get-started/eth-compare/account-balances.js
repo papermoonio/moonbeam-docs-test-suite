@@ -11,7 +11,7 @@ describe('Account Balances', () => {
 
   const getApi = async () => {
     // Construct API provider
-    const wsProvider = new WsProvider('ws://localhost:9944');
+    const wsProvider = new WsProvider('ws://127.0.0.1:9944');
     const api = await ApiPromise.create({ provider: wsProvider, noInitWarn: true });
     return api;
   };
