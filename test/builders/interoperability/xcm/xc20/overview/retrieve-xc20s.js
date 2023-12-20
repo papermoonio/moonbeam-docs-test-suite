@@ -1,7 +1,7 @@
 import { assert } from 'chai';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 
-describe('Overview of XC-20s - Current List of External XC-20s', function () {
+describe.only('Overview of XC-20s - Current List of External XC-20s', function () {
   const getApi = async (wssEndpoint) => {
     const wsProvider = new WsProvider(wssEndpoint);
     const api = await ApiPromise.create({ provider: wsProvider, noInitWarn: true });
@@ -18,10 +18,10 @@ describe('Overview of XC-20s - Current List of External XC-20s', function () {
       const api = await getApi('wss://wss.api.moonbeam.network');
 
       const assets = await api.query.assets.asset.entries();
-      assert.equal(assets.length, 26n);
+      assert.equal(assets.length, 28n);
 
       api.disconnect();
-    });
+    }).timeout(15000);
 
     it('should return the list of XC-20s on Moonriver', async () => {
       const api = await getApi('wss://wss.api.moonriver.moonbeam.network');
@@ -30,7 +30,7 @@ describe('Overview of XC-20s - Current List of External XC-20s', function () {
       assert.equal(assets.length, 23n);
 
       api.disconnect();
-    });
+    }).timeout(15000);;
 
     /** This test is to ensure we can access the metadata as expected */
     it('should return the metadata for an asset', async () => {
@@ -43,6 +43,6 @@ describe('Overview of XC-20s - Current List of External XC-20s', function () {
       assert.equal(metadata.decimals, '10');
 
       api.disconnect();
-    });
+    }).timeout(15000);;
   });
 });

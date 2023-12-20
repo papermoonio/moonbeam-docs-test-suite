@@ -36,7 +36,7 @@ describe('Overview of XC-20s - Retrieve Local XC-20 Metadata', function () {
     },
   ];
 
-  describe('Retrieve Local XC-20 Metadata - Ethers.js', async () => {
+  describe('Retrieve Local XC-20 Metadata - Web3.js', async () => {
     it('should return the metadata for a local xc-20', async () => {
       const tokenContract = new web3.eth.Contract(tokenABI, tokenAddress);
       const [name, symbol, decimals] = await Promise.all([
