@@ -1,7 +1,7 @@
 import { assert } from 'chai';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 
-describe.only('Overview of XC-20s - Current List of External XC-20s', function () {
+describe('Overview of XC-20s - Current List of External XC-20s', function () {
   const getApi = async (wssEndpoint) => {
     const wsProvider = new WsProvider(wssEndpoint);
     const api = await ApiPromise.create({ provider: wsProvider, noInitWarn: true });
