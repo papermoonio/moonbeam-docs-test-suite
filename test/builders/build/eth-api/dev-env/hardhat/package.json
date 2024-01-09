@@ -11,8 +11,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@nomicfoundation/hardhat-ethers": "^3.0.4",
-    "ethers": "^6.8.1",
-    "hardhat": "^2.19.0"
+    "@nomicfoundation/hardhat-ethers": "^3.0.5",
+    "ethers": "^6.9.2",
+    "hardhat": "^2.19.4"
   }
 }

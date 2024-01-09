@@ -6,13 +6,13 @@
   "scripts": {
     "docker-run": "docker run -d --rm --name moonbeam_development -p 9944:9944 -p 9933:9933 purestake/moonbeam:$(grep MOONBEAM_CLIENT_VERSION .env | cut -d '=' -f2) --dev --ws-external --rpc-external",
     "install-python-packages": "pip install -r requirements.txt",
-    "local-docker-run": "docker run --rm --name moonbeam_development --network host purestake/moonbeam:v0.32.1 --dev",
-    "local-docker-run-macos": "docker run --rm --name moonbeam_development -p 9944:9944 purestake/moonbeam:v0.32.1 --dev --ws-external --rpc-external",
+    "local-docker-run": "docker run --rm --name moonbeam_development --network host moonbeamfoundation/moonbeam:latest --dev",
+    "local-docker-run-macos": "docker run --rm --name moonbeam_development -p 9944:9944 moonbeamfoundation/moonbeam:latest --dev --rpc-external",
     "prettier": "npx prettier --write .",
     "javascript-test": "mocha -r dotenv/config 'test/**/*.js'",
     "hardhat-test": "npm --prefix ./test/builders/build/eth-api/dev-env/hardhat run update-packages && npm --prefix ./test/builders/build/eth-api/dev-env/hardhat run test",
     "python-test": "python3 test/run_python_tests.py",
-    "test": "npm run javascript-test && npm run python-test && npm run hardhat-test",
+    "test": "npm run python-test && npm run javascript-test && npm run hardhat-test",
     "update-packages": "npx npm-check-updates -u && npm install --silent"
   },
   "mocha": {
@@ -23,21 +23,21 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@polkadot/api": "^10.10.1",
-    "@polkadot/keyring": "^12.5.1",
-    "@polkadot/util": "^12.5.1",
-    "@polkadot/util-crypto": "^12.5.1",
-    "chai": "^4.3.10",
+    "@polkadot/api": "^10.11.2",
+    "@polkadot/keyring": "^12.6.2",
+    "@polkadot/util": "^12.6.2",
+    "@polkadot/util-crypto": "^12.6.2",
+    "chai": "^5.0.0",
     "dotenv": "^16.3.1",
-    "ethers": "^6.8.0",
+    "ethers": "^6.9.2",
     "fs": "^0.0.1-security",
-    "hardhat": "^2.19.0",
+    "hardhat": "^2.19.4",
     "mocha": "^10.2.0",
-    "solc": "^0.8.22",
-    "web3": "^4.2.1"
+    "solc": "^0.8.23",
+    "web3": "^4.3.0"
   },
   "type": "module",
   "devDependencies": {
-    "prettier": "3.0.3"
+    "prettier": "3.1.1"
   }
 }
