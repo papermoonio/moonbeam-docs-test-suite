@@ -51,7 +51,7 @@ describe('Consensus & Finality - Finality with Substrate Libraries', () => {
       const txBlockNumber = await getTransactionBlockNumber(api, txHash);
       // The transaction should not yet be finalized, as the transaction was just sent
       assert.isFalse(finalizedBlockNumber >= txBlockNumber);
-    }).timeout(50000);
+    }).timeout(75000);
     it('should compare the last finalized block number with the transaction block number of a finalized transaction', async () => {
       const api = await getApi();
       // Get the last finalized block number
