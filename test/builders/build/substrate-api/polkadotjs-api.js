@@ -22,7 +22,7 @@ describe('Polkadot.js API', function () {
   const getApi = async () => {
     // Construct API provider
     const wsProvider = new WsProvider('ws://localhost:9944');
-    const api = await ApiPromise.create({ provider: wsProvider });
+    const api = await ApiPromise.create({ provider: wsProvider, noInitWarn: true });
 
     return api;
   };
@@ -104,7 +104,7 @@ describe('Polkadot.js API', function () {
       const bob = ethers.Wallet.createRandom().address;
 
       // Form the transaction
-      const tx = api.tx.balances.transfer(bob, 12345n);
+      const tx = api.tx.balances.transferAllowDeath(bob, 12345n);
 
       // Sign and send the transaction
       const txHash = await tx.signAndSend(aliceFromUri);
@@ -134,8 +134,8 @@ describe('Polkadot.js API', function () {
 
       // Construct a list of transactions to batch
       const txs = [
-        api.tx.balances.transfer(bob, 12345n),
-        api.tx.balances.transfer(charlie, 12345n),
+        api.tx.balances.transferAllowDeath(bob, 12345n),
+        api.tx.balances.transferAllowDeath(charlie, 12345n),
       ];
 
       // Estimate the fees as RuntimeDispatchInfo, using the signer (either
@@ -159,8 +159,8 @@ describe('Polkadot.js API', function () {
 
       // Construct a list of transactions to batch
       const txs = [
-        api.tx.balances.transfer(bob, 12345n),
-        api.tx.balances.transfer(charlie, 12345n),
+        api.tx.balances.transferAllowDeath(bob, 12345n),
+        api.tx.balances.transferAllowDeath(charlie, 12345n),
       ];
 
       // Construct the batch and send the transactions
