@@ -1,4 +1,4 @@
-const { expect } = require('chai');
+import { expect } from 'chai';
 
 describe('Using Hardhat to Deploy to Moonbeam', () => {
   describe('Deploy the Contract', () => {

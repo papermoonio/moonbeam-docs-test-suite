@@ -1,4 +1,4 @@
-const { assert } = require('chai');
+import { assert } from 'chai';
 
 describe('Using Hardhat to Deploy to Moonbeam', () => {
   describe('Interact with the Contract', () => {
