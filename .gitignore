@@ -3,3 +3,7 @@ __pycache__/
 *.pyc
 .env
 *.cpython-310.pyc
+
+# Hardhat directories
+artifacts
+cache

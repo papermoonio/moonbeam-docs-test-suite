@@ -9,8 +9,16 @@
     "local-docker-run": "docker run --rm --name moonbeam_development --network host moonbeamfoundation/moonbeam:latest --dev",
     "local-docker-run-macos": "docker run --rm --name moonbeam_development -p 9944:9944 moonbeamfoundation/moonbeam:latest --dev --rpc-external",
     "prettier": "npx prettier --write .",
-    "test": "python3 test/run_python_tests.py && mocha -r dotenv/config 'test/**/*.js'",
+    "javascript-test": "mocha -r dotenv/config 'test/**/*.js'",
+    "hardhat-test": "npm --prefix ./test/builders/build/eth-api/dev-env/hardhat run update-packages && npm --prefix ./test/builders/build/eth-api/dev-env/hardhat run test",
+    "python-test": "python3 test/run_python_tests.py",
+    "test": "npm run python-test && npm run hardhat-test && npm run javascript-test",
     "update-packages": "npx npm-check-updates -u && npm install --silent"
+  },
+  "mocha": {
+    "ignore": [
+      "test/builders/build/eth-api/dev-env/hardhat/**"
+    ]
   },
   "author": "",
   "license": "ISC",
@@ -23,6 +31,7 @@
     "dotenv": "^16.3.1",
     "ethers": "^6.9.2",
     "fs": "^0.0.1-security",
+    "hardhat": "^2.19.4",
     "mocha": "^10.2.0",
     "solc": "^0.8.23",
     "web3": "^4.3.0"
