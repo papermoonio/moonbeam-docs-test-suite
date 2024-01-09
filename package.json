@@ -9,7 +9,7 @@
     "local-docker-run": "docker run --rm --name moonbeam_development --network host moonbeamfoundation/moonbeam:latest --dev",
     "local-docker-run-macos": "docker run --rm --name moonbeam_development -p 9944:9944 moonbeamfoundation/moonbeam:latest --dev --rpc-external",
     "prettier": "npx prettier --write .",
-    "test": "mocha -r dotenv/config 'test/**/*.js' && python3 test/run_python_tests.py",
+    "test": "python3 test/run_python_tests.py && mocha -r dotenv/config 'test/**/*.js'",
     "update-packages": "npx npm-check-updates -u && npm install --silent"
   },
   "author": "",
