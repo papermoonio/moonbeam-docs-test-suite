@@ -28,16 +28,16 @@
     "@polkadot/util": "^12.6.2",
     "@polkadot/util-crypto": "^12.6.2",
     "chai": "^5.0.0",
-    "dotenv": "^16.3.1",
-    "ethers": "^6.9.2",
+    "dotenv": "^16.3.2",
+    "ethers": "^6.10.0",
     "fs": "^0.0.1-security",
     "hardhat": "^2.19.4",
     "mocha": "^10.2.0",
     "solc": "^0.8.23",
-    "web3": "^4.3.0"
+    "web3": "^4.4.0"
   },
   "type": "module",
   "devDependencies": {
-    "prettier": "3.1.1"
+    "prettier": "3.2.4"
   }
 }
