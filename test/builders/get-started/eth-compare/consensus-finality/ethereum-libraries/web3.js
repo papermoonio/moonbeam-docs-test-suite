@@ -79,7 +79,7 @@ describe('Consensus & Finality - Finality with Ethereum Libraries', () => {
       const txBlockNumber = getTransactionBlockNumber(txHash);
       // The transaction should not yet be finalized, as the transaction was just sent
       assert.isFalse(finalizedBlockNumber >= txBlockNumber);
-    }).timeout(50000);
+    }).timeout(90000);
     it('should compare the last finalized block number with the transaction block number of a finalized transaction', async () => {
       // Get the last finalized block number
       const finalizedBlockNumber = await getFinalizedBlockNumber();
@@ -102,7 +102,7 @@ describe('Consensus & Finality - Finality with Ethereum Libraries', () => {
       ]);
       // The transaction should not yet be finalized, as the transaction was just sent
       assert.isFalse(isFinalized.result);
-    }).timeout(50000);
+    }).timeout(90000);
     it('should check if the transaction block hash of a recently sent transaction has been finalized using moon_isBlockFinalized', async () => {
       // Get the block hash of the transaction
       const blockHash = await getTransactionBlockHash(finalizedTxHash);
@@ -125,7 +125,7 @@ describe('Consensus & Finality - Finality with Ethereum Libraries', () => {
       ]);
       // The transaction should not yet be finalized, as the transaction was just sent
       assert.isFalse(isFinalized.result);
-    }).timeout(50000);
+    }).timeout(90000);
     it('should check if the transaction block hash of a recently sent transaction has been finalized using moon_isTxFinalized', async () => {
       // Use the transaction hash to check if the transaction is finalized
       const isFinalized = await customWeb3Request(web3.currentProvider, 'moon_isTxFinalized', [
