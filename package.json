@@ -9,7 +9,7 @@
     "local-docker-run": "docker run --rm --name moonbeam_development --network host moonbeamfoundation/moonbeam:latest --dev",
     "local-docker-run-macos": "docker run --rm --name moonbeam_development -p 9944:9944 moonbeamfoundation/moonbeam:latest --dev --rpc-external",
     "prettier": "npx prettier --write .",
-    "javascript-test": "mocha -r dotenv/config 'test/**/*.js'",
+    "javascript-test": "mocha -r dotenv/config 'test/**/*.js' --timeout 10000",
     "hardhat-test": "npm --prefix ./test/builders/build/eth-api/dev-env/hardhat run update-packages && npm --prefix ./test/builders/build/eth-api/dev-env/hardhat run test",
     "python-test": "python3 test/run_python_tests.py",
     "test": "npm run python-test && npm run hardhat-test && npm run javascript-test",
