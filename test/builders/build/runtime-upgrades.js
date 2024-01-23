@@ -32,4 +32,4 @@ describe('Runtime Upgrades', () => {
       api.disconnect();
     });
   });
-})
+});

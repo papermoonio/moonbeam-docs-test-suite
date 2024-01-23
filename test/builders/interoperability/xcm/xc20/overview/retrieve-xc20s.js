@@ -30,7 +30,7 @@ describe('Overview of XC-20s - Current List of External XC-20s', function () {
       assert.equal(assets.length, 23n);
 
       api.disconnect();
-    }).timeout(15000);;
+    }).timeout(15000);
 
     /** This test is to ensure we can access the metadata as expected */
     it('should return the metadata for an asset', async () => {
@@ -43,6 +43,6 @@ describe('Overview of XC-20s - Current List of External XC-20s', function () {
       assert.equal(metadata.decimals, '10');
 
       api.disconnect();
-    }).timeout(15000);;
+    }).timeout(15000);
   });
 });
