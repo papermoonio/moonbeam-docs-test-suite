@@ -34,7 +34,7 @@ describe('Viem - Deploy a Contract', function () {
 
   async function deployContract() {
     const account = privateKeyToAccount(privateKey);
-    
+
     const walletClient = createWalletClient({
       account,
       chain: moonbeamDev,
@@ -46,23 +46,23 @@ describe('Viem - Deploy a Contract', function () {
     });
 
     // var deploy = async () => {
-      var contractFile = await compile();
+    var contractFile = await compile();
 
-      const bytecode = contractFile.evm.bytecode.object;
-      const abi = contractFile.abi;
-      const _initialNumber = 5;
+    const bytecode = contractFile.evm.bytecode.object;
+    const abi = contractFile.abi;
+    const _initialNumber = 5;
 
-      const contract = await walletClient.deployContract({
-        abi,
-        account,
-        bytecode,
-        args: [_initialNumber],
-      });
+    const contract = await walletClient.deployContract({
+      abi,
+      account,
+      bytecode,
+      args: [_initialNumber],
+    });
 
-      const transaction = await publicClient.waitForTransactionReceipt({
-        hash: contract,
-      });
-      return transaction.contractAddress;
+    const transaction = await publicClient.waitForTransactionReceipt({
+      hash: contract,
+    });
+    return transaction.contractAddress;
     // };
     // return deploy();
   }
@@ -96,7 +96,6 @@ describe('Viem - Deploy a Contract', function () {
 
   describe('Get Contract - get.js', async () => {
     it('should get the current number correctly', async () => {
-      
       const client = createPublicClient({
         chain: moonbeamDev,
         transport: http(rpcUrl),
@@ -121,7 +120,7 @@ describe('Viem - Deploy a Contract', function () {
   describe('Increment Contract - increment.js', async () => {
     it('should increment the number correctly', async () => {
       const account = privateKeyToAccount(privateKey);
-      
+
       const walletClient = createWalletClient({
         account,
         chain: moonbeamDev,
@@ -168,7 +167,7 @@ describe('Viem - Deploy a Contract', function () {
   describe('Reset Contract - reset.js', async () => {
     it('should reset the number', async () => {
       const account = privateKeyToAccount(privateKey);
-      
+
       const walletClient = createWalletClient({
         account,
         chain: moonbeamDev,
@@ -200,7 +199,7 @@ describe('Viem - Deploy a Contract', function () {
       });
 
       await publicClient.waitForTransactionReceipt({
-        hash:hashIncre,
+        hash: hashIncre,
       });
 
       let secValue = await publicClient.readContract({
@@ -218,7 +217,7 @@ describe('Viem - Deploy a Contract', function () {
       });
 
       await publicClient.waitForTransactionReceipt({
-        hash:hashReset,
+        hash: hashReset,
       });
 
       let finalValue = await publicClient.readContract({
