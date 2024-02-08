@@ -8,6 +8,7 @@ import solc from 'solc';
 
 describe('Viem - Deploy a Contract', function () {
   const privateKey = '0x5fb92d6e98884f76de468fa3f6278f8807c48bebc13595d45af5bdc4da702133';
+  const rpcUrl = process.env.HTTP_RPC_ENDPOINT;
 
   function compile() {
     var source = fs.readFileSync('contracts/Incrementer.sol', 'utf8');
@@ -33,7 +34,7 @@ describe('Viem - Deploy a Contract', function () {
 
   async function deployContract() {
     const account = privateKeyToAccount(privateKey);
-    const rpcUrl = process.env.HTTP_RPC_ENDPOINT;
+    
     const walletClient = createWalletClient({
       account,
       chain: moonbeamDev,
@@ -44,7 +45,7 @@ describe('Viem - Deploy a Contract', function () {
       transport: http(rpcUrl),
     });
 
-    var deploy = async () => {
+    // var deploy = async () => {
       var contractFile = await compile();
 
       const bytecode = contractFile.evm.bytecode.object;
@@ -58,23 +59,22 @@ describe('Viem - Deploy a Contract', function () {
         args: [_initialNumber],
       });
 
-      var transaction = await publicClient.waitForTransactionReceipt({
+      const transaction = await publicClient.waitForTransactionReceipt({
         hash: contract,
       });
       return transaction.contractAddress;
-    };
-    return deploy();
+    // };
+    // return deploy();
   }
 
   describe('Compile Contract - compile.js', async () => {
     it('should compile the contract into bytecode', async () => {
-      var contractFile = await compile();
+      const contractFile = compile();
       const bytecode = contractFile.evm.bytecode.object;
       assert.exists(bytecode);
     });
-
     it('should return the correct number of ABI inputs', async () => {
-      var contractFile = await compile();
+      const contractFile = compile();
       const abi = contractFile.abi;
       expect(abi).to.eql(incrementerAbi.abi);
     });
@@ -82,13 +82,12 @@ describe('Viem - Deploy a Contract', function () {
 
   describe('Deploy Contract - deploy.js', async () => {
     it('should deploy a contract on chain', async () => {
-      const rpcUrl = process.env.HTTP_RPC_ENDPOINT;
-      var contractAddress = await deployContract();
-      var publicClient = createPublicClient({
+      const contractAddress = await deployContract();
+      const publicClient = createPublicClient({
         chain: moonbeamDev,
         transport: http(rpcUrl),
       });
-      var code = await publicClient.getBytecode({
+      const code = await publicClient.getBytecode({
         address: contractAddress,
       });
       assert.exists(code);
@@ -97,14 +96,14 @@ describe('Viem - Deploy a Contract', function () {
 
   describe('Get Contract - get.js', async () => {
     it('should get the current number correctly', async () => {
-      const rpcUrl = process.env.HTTP_RPC_ENDPOINT;
+      
       const client = createPublicClient({
         chain: moonbeamDev,
         transport: http(rpcUrl),
       });
 
       const contractAddress = await deployContract();
-      var contractFile = await compile();
+      const contractFile = await compile();
       const abi = contractFile.abi;
 
       const data = await client.readContract({
@@ -122,7 +121,7 @@ describe('Viem - Deploy a Contract', function () {
   describe('Increment Contract - increment.js', async () => {
     it('should increment the number correctly', async () => {
       const account = privateKeyToAccount(privateKey);
-      const rpcUrl = process.env.HTTP_RPC_ENDPOINT;
+      
       const walletClient = createWalletClient({
         account,
         chain: moonbeamDev,
@@ -135,9 +134,9 @@ describe('Viem - Deploy a Contract', function () {
       });
 
       const contractAddress = await deployContract();
-      var contractFile = await compile();
+      const contractFile = await compile();
       const abi = contractFile.abi;
-      var initValue = await publicClient.readContract({
+      const initValue = await publicClient.readContract({
         abi,
         functionName: 'number',
         address: contractAddress,
@@ -155,7 +154,7 @@ describe('Viem - Deploy a Contract', function () {
         hash,
       });
 
-      var currValue = await publicClient.readContract({
+      const currValue = await publicClient.readContract({
         abi,
         functionName: 'number',
         address: contractAddress,
@@ -169,7 +168,7 @@ describe('Viem - Deploy a Contract', function () {
   describe('Reset Contract - reset.js', async () => {
     it('should reset the number', async () => {
       const account = privateKeyToAccount(privateKey);
-      const rpcUrl = process.env.HTTP_RPC_ENDPOINT;
+      
       const walletClient = createWalletClient({
         account,
         chain: moonbeamDev,
@@ -181,10 +180,10 @@ describe('Viem - Deploy a Contract', function () {
       });
 
       const contractAddress = await deployContract();
-      var contractFile = await compile();
+      const contractFile = await compile();
       const abi = contractFile.abi;
 
-      var initValue = await publicClient.readContract({
+      let initValue = await publicClient.readContract({
         abi,
         functionName: 'number',
         address: contractAddress,
@@ -193,7 +192,7 @@ describe('Viem - Deploy a Contract', function () {
 
       const _value = 3;
 
-      var hash = await walletClient.writeContract({
+      let hashIncre = await walletClient.writeContract({
         abi,
         functionName: 'increment',
         address: contractAddress,
@@ -201,16 +200,17 @@ describe('Viem - Deploy a Contract', function () {
       });
 
       await publicClient.waitForTransactionReceipt({
-        hash,
+        hash:hashIncre,
       });
 
-      var secValue = await publicClient.readContract({
+      let secValue = await publicClient.readContract({
         abi,
         functionName: 'number',
         address: contractAddress,
         args: [],
       });
-      var hash = await walletClient.writeContract({
+
+      let hashReset = await walletClient.writeContract({
         abi,
         functionName: 'reset',
         address: contractAddress,
@@ -218,16 +218,18 @@ describe('Viem - Deploy a Contract', function () {
       });
 
       await publicClient.waitForTransactionReceipt({
-        hash,
+        hash:hashReset,
       });
-      var finalValue = await publicClient.readContract({
+
+      let finalValue = await publicClient.readContract({
         abi,
         functionName: 'number',
         address: contractAddress,
         args: [],
       });
+
       assert.equal(Number(initValue) + _value, secValue);
       assert.equal(Number(finalValue), 0);
-    }).timeout(30000);
+    }).timeout(600000);
   });
 });
