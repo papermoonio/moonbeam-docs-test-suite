@@ -18,7 +18,7 @@ describe('Overview of XC-20s - Current List of External XC-20s', function () {
       const api = await getApi('wss://wss.api.moonbeam.network');
 
       const assets = await api.query.assets.asset.entries();
-      assert.equal(assets.length, 37n);
+      assert.equal(assets.length, 38n);
 
       api.disconnect();
     }).timeout(15000);
