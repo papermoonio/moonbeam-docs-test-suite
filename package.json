@@ -23,7 +23,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@polkadot/api": "^10.12.1",
+    "@polkadot/api": "^10.12.4",
     "@polkadot/keyring": "^12.6.2",
     "@polkadot/util": "^12.6.2",
     "@polkadot/util-crypto": "^12.6.2",
@@ -31,10 +31,10 @@
     "dotenv": "^16.4.5",
     "ethers": "^6.11.1",
     "fs": "^0.0.1-security",
-    "hardhat": "^2.21.0",
-    "mocha": "^10.3.0",
-    "solc": "^0.8.24",
-    "web3": "^4.5.0"
+    "hardhat": "^2.22.2",
+    "mocha": "^10.4.0",
+    "solc": "^0.8.25",
+    "web3": "^4.7.0"
   },
   "type": "module",
   "devDependencies": {
