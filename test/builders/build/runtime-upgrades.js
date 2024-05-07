@@ -5,7 +5,7 @@ describe('Runtime Upgrades', () => {
   const getApi = async (url) => {
     // Construct API provider
     const wsProvider = new WsProvider(url);
-    const api = await ApiPromise.create({ provider: wsProvider });
+    const api = await ApiPromise.create({ provider: wsProvider, noInitWarn: true });
     return api;
   };
 
@@ -21,7 +21,7 @@ describe('Runtime Upgrades', () => {
       const api = await getApi('wss://wss.api.moonriver.moonbeam.network');
       const runtime = await api.query.system.lastRuntimeUpgrade();
       // Assert the runtime is equal to the latest version we have on the docs
-      assert.equal(runtime.toJSON().specVersion, 2801);
+      assert.equal(runtime.toJSON().specVersion, 2901);
       api.disconnect();
     });
     it('should return the latest runtime version for Moonbeam', async () => {
