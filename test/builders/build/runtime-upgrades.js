@@ -5,7 +5,7 @@ describe('Runtime Upgrades', () => {
   const getApi = async (url) => {
     // Construct API provider
     const wsProvider = new WsProvider(url);
-    const api = await ApiPromise.create({ provider: wsProvider });
+    const api = await ApiPromise.create({ provider: wsProvider, noInitWarn: true });
     return api;
   };
 
