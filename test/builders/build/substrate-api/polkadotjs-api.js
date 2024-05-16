@@ -19,47 +19,36 @@ describe('Polkadot.js API', function () {
   const index = 0;
   const ethDerPath = "m/44'/60'/0'/0/" + index;
 
-  const getApi = async () => {
+  // Define the API
+  let api;
+
+  before(async function () {
     // Construct API provider
     const wsProvider = new WsProvider('ws://localhost:9944');
-    const api = await ApiPromise.create({ provider: wsProvider, noInitWarn: true });
-
-    return api;
-  };
+     api = await ApiPromise.create({ provider: wsProvider, noInitWarn: true });
+  })
 
   describe('Querying for Information - State Queries', async () => {
     it('should return the account balance and nonce', async () => {
-      const api = await getApi();
-
       const bob = ethers.Wallet.createRandom().address;
       const { nonce, data: balance } = await api.query.system.account(bob);
 
       assert.equal(nonce, 0n);
       assert.equal(balance.free, 0n);
-
-      api.disconnect();
     });
   });
 
   describe('Querying for Information - RPC Queries', async () => {
     it('should return the chain name', async () => {
-      const api = await getApi();
-
       const chain = await api.rpc.system.chain();
 
-      assert.equal(chain, 'Moonbase Development Testnet');
-      api.disconnect();
-    });
+      assert.equal(chain, 'Moonbase Development Testnet');    });
     it('should return the last block number and hash', async () => {
-      const api = await getApi();
-
       const lastHeader = await api.rpc.chain.getHeader();
 
       // Cannot predict the hash or block number but we can test that a value is returned
       assert.exists(lastHeader.number);
       assert.exists(lastHeader.hash);
-
-      api.disconnect();
     });
   });
 
@@ -94,8 +83,6 @@ describe('Polkadot.js API', function () {
 
   describe('Transactions - Sending Basic Transactions', async () => {
     it('should sign and send a transaction successfully', async () => {
-      const api = await getApi();
-
       // Create a keyring instance
       const keyring = new Keyring({ type: 'ethereum' });
 
@@ -115,15 +102,11 @@ describe('Polkadot.js API', function () {
 
       assert.exists(txHash);
       assert.equal(balance.free, 12345n);
-
-      api.disconnect();
     });
   });
 
   describe('Transactions - Batching Transactions', async () => {
     it('should estimate the fees for a batch transaction', async () => {
-      const api = await getApi();
-
       // Create a keyring instance
       const keyring = new Keyring({ type: 'ethereum' });
 
@@ -143,12 +126,8 @@ describe('Polkadot.js API', function () {
       const info = await api.tx.utility.batch(txs).paymentInfo(aliceFromUri);
 
       expect(info.weight.refTime.toNumber()).to.be.greaterThan(0);
-
-      api.disconnect();
     });
     it('should sign and send a batch transaction successfully', async () => {
-      const api = await getApi();
-
       // Create a keyring instance
       const keyring = new Keyring({ type: 'ethereum' });
 
@@ -174,8 +153,10 @@ describe('Polkadot.js API', function () {
       assert.exists(txHash);
       assert.equal(bobBalance.free, 12345n);
       assert.equal(charlieBalance.free, 12345n);
-
-      api.disconnect();
     });
   });
+
+  after(async function () {
+    return api.disconnect();
+  })
 });
