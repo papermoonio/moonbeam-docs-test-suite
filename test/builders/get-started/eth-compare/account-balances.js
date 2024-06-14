@@ -14,9 +14,10 @@ describe('Account Balances', () => {
 
   before(async function () {
     // Construct API provider
-    const wsProvider = new WsProvider('ws://localhost:9944');
-     api = await ApiPromise.create({ provider: wsProvider, noInitWarn: true });
-  })
+    const wsProvider = new WsProvider('ws://127.0.0.1:9944');
+    api = await ApiPromise.create({ provider: wsProvider, noInitWarn: true });
+    await api.isReady;
+  });
 
   describe('Moonbeam Account Balances - Retrieve Your Balance', async () => {
     it('should return the balance of an account', async () => {
@@ -40,6 +41,6 @@ describe('Account Balances', () => {
   });
 
   after(async function () {
-    return api.disconnect();
-  })
+    api.disconnect();
+  });
 });
