@@ -10,12 +10,16 @@ describe('Consensus & Finality - Finality with Substrate Libraries', () => {
   const finalizedTxHash = '0x3ea780d2e53fc265e9d251b5f41794c3d5ec4a32e854ca6562b111ec7002057e';
 
   /** HELPER FUNCTIONS */
-  const getApi = async () => {
-    const wsProvider = new WsProvider(process.env.MOONBASE_WSS_RPC_ENDPOINT);
-    const api = await ApiPromise.create({ provider: wsProvider, noInitWarn: true });
+  // Define the API
+  let api;
 
-    return api;
-  };
+  before(async function () {
+    // Construct API provider
+    const wsProvider = new WsProvider('ws://127.0.0.1:9944');
+    api = await ApiPromise.create({ provider: wsProvider, noInitWarn: true });
+    await api.isReady;
+  });
+
   const sendTx = async () => {
     const provider = new ethers.JsonRpcProvider(process.env.MOONBASE_HTTP_RPC_ENDPOINT, {
       chainId: 1287,
@@ -42,7 +46,6 @@ describe('Consensus & Finality - Finality with Substrate Libraries', () => {
 
   describe('Check Transaction Finality with Substrate Libraries - polkadot.js', () => {
     it('should compare the last finalized block number with the transaction block number of a recently sent transaction', async () => {
-      const api = await getApi();
       // Send a transaction
       const txHash = await sendTx();
       // Get the last finalized block number
@@ -53,7 +56,6 @@ describe('Consensus & Finality - Finality with Substrate Libraries', () => {
       assert.isFalse(finalizedBlockNumber >= txBlockNumber);
     }).timeout(75000);
     it('should compare the last finalized block number with the transaction block number of a finalized transaction', async () => {
-      const api = await getApi();
       // Get the last finalized block number
       const finalizedBlockNumber = await getFinalizedBlockNumber(api);
       // Get the transaction block number
@@ -61,5 +63,9 @@ describe('Consensus & Finality - Finality with Substrate Libraries', () => {
       // The transaction should not yet be finalized, as the transaction was just sent
       assert.isTrue(finalizedBlockNumber >= txBlockNumber);
     });
+  });
+
+  after(async function () {
+    api.disconnect();
   });
 });

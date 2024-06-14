@@ -24,9 +24,10 @@ describe('Polkadot.js API', function () {
 
   before(async function () {
     // Construct API provider
-    const wsProvider = new WsProvider('ws://localhost:9944');
-     api = await ApiPromise.create({ provider: wsProvider, noInitWarn: true });
-  })
+    const wsProvider = new WsProvider('ws://127.0.0.1:9944');
+    api = await ApiPromise.create({ provider: wsProvider, noInitWarn: true });
+    await api.isReady;
+  });
 
   describe('Querying for Information - State Queries', async () => {
     it('should return the account balance and nonce', async () => {
@@ -42,7 +43,8 @@ describe('Polkadot.js API', function () {
     it('should return the chain name', async () => {
       const chain = await api.rpc.system.chain();
 
-      assert.equal(chain, 'Moonbase Development Testnet');    });
+      assert.equal(chain, 'Moonbase Development Testnet');
+    });
     it('should return the last block number and hash', async () => {
       const lastHeader = await api.rpc.chain.getHeader();
 
@@ -157,6 +159,6 @@ describe('Polkadot.js API', function () {
   });
 
   after(async function () {
-    return api.disconnect();
-  })
+    api.disconnect();
+  });
 });
