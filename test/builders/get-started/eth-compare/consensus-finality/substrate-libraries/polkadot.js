@@ -15,7 +15,7 @@ describe('Consensus & Finality - Finality with Substrate Libraries', () => {
 
   before(async function () {
     // Construct API provider
-    const wsProvider = new WsProvider('ws://127.0.0.1:9944');
+    const wsProvider = new WsProvider(process.env.MOONBASE_WSS_RPC_ENDPOINT);
     api = await ApiPromise.create({ provider: wsProvider, noInitWarn: true });
     await api.isReady;
   });
