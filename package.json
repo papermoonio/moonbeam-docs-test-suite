@@ -23,21 +23,21 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@polkadot/api": "^11.2.1",
-    "@polkadot/keyring": "^12.6.2",
-    "@polkadot/util": "^12.6.2",
-    "@polkadot/util-crypto": "^12.6.2",
+    "@polkadot/api": "^12.2.1",
+    "@polkadot/keyring": "^13.0.2",
+    "@polkadot/util": "^13.0.2",
+    "@polkadot/util-crypto": "^13.0.2",
     "chai": "^5.1.1",
     "dotenv": "^16.4.5",
-    "ethers": "^6.12.2",
+    "ethers": "^6.13.1",
     "fs": "^0.0.1-security",
-    "hardhat": "^2.22.5",
-    "mocha": "^10.4.0",
+    "hardhat": "^2.22.6",
+    "mocha": "^10.6.0",
     "solc": "^0.8.26",
-    "web3": "^4.9.0"
+    "web3": "^4.11.0"
   },
   "type": "module",
   "devDependencies": {
-    "prettier": "3.3.0"
+    "prettier": "3.3.3"
   }
 }
