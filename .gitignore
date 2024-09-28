@@ -7,3 +7,8 @@ __pycache__/
 # Hardhat directories
 artifacts
 cache
+
+# Waffle 
+*.tsbuildinfo
+package-lock.json
+test/builders/build/eth-api/dev-env/waffle/build
