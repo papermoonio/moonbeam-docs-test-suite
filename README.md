@@ -59,3 +59,31 @@ If your test requires a contract to run, you can add the file to the `contracts`
 👉 Your tests should not rely on or be impacted by any previous tests that have run.
 
 👉 Use burner accounts so that you're testing against a blank account and not re-using the same account for all of the tests
+
+## Run the Tests Locally
+
+To run the tests locally, you'll need to take the following steps:
+
+1. Update the `.env` file per the `example.env` file
+2. Spin up a development node using Docker. There are two commands, one for Linux and one for MacOS, that can be used:
+
+    - Linux:
+
+        ```bash
+        npm run local-docker-run
+        ```
+    
+    - MacOS:
+
+        ```bash
+        npm run local-docker-run-macos
+        ```
+
+3. Run all of the tests:
+   
+    ```bash
+    npm run test
+    ```
+
+    You can also modify the command to run a specific set of tests: `javascript-test`, `hardhat-test`, or `python-test`.
+      
