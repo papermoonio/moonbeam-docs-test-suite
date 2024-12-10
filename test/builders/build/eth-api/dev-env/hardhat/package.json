@@ -13,7 +13,7 @@
   "dependencies": {
     "@nomicfoundation/hardhat-ethers": "^3.0.8",
     "ethers": "^6.13.4",
-    "hardhat": "^2.22.13"
+    "hardhat": "^2.22.17"
   },
   "type": "module"
 }
