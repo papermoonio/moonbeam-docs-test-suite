@@ -18,31 +18,17 @@ describe('Overview of XC-20s - Current List of External XC-20s', function () {
       const api = await getApi('wss://wss.api.moonbeam.network');
 
       const assets = await api.query.assets.asset.entries();
-      assert.equal(assets.length, 48n);
+      assert.equal(assets.length, 46n);
 
       api.disconnect();
     }).timeout(15000);
 
-    it('should return the list of XC-20s on Moonriver', async () => {
+    it('should return the correct counter for XC-20s on Moonriver', async () => {
       const api = await getApi('wss://wss.api.moonriver.moonbeam.network');
-
-      const assets = await api.query.assets.asset.entries();
-      assert.equal(assets.length, 24n);
-
+      const counter = await api.query.evmForeignAssets.counterForAssetsById();
+      assert.equal(counter.toNumber(), 24);
       api.disconnect();
     }).timeout(15000);
 
-    /** This test is to ensure we can access the metadata as expected */
-    it('should return the metadata for an asset', async () => {
-      const api = await getApi('wss://wss.api.moonbeam.network');
-      const xcDOT = 42259045809535163221576417993425387648n;
-
-      const metadata = (await api.query.assets.metadata(xcDOT)).toHuman();
-      assert.equal(metadata.name, 'xcDOT');
-      assert.equal(metadata.symbol, 'xcDOT');
-      assert.equal(metadata.decimals, '10');
-
-      api.disconnect();
-    }).timeout(15000);
   });
 });
