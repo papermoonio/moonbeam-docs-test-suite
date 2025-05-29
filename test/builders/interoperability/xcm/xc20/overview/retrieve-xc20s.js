@@ -14,12 +14,10 @@ describe('Overview of XC-20s - Current List of External XC-20s', function () {
      * So we are hardcoding in the current number and any time this test fails,
      * we'll know we need to update the docs along with this test.
      */
-    it('should return the list of XC-20s on Moonbeam', async () => {
+    it('should return the correct counter for XC-20s on Moonriver', async () => {
       const api = await getApi('wss://wss.api.moonbeam.network');
-
-      const assets = await api.query.assets.asset.entries();
-      assert.equal(assets.length, 46n);
-
+      const counter = await api.query.evmForeignAssets.counterForAssetsById();
+      assert.equal(counter.toNumber(), 54);
       api.disconnect();
     }).timeout(15000);
 
