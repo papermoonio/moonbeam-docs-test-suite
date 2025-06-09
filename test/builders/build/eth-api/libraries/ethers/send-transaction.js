@@ -50,15 +50,12 @@ describe('Ethers – Send a Transaction', function () {
         to: bob,
         value: ethers.parseEther('10'),
       });
-      const receipt = await tx.wait();
-      assert.equal(receipt.status, 1, 'Tx should succeed');
-
-      const bobBalWei = await provider.getBalance(bob);
-      assert.equal(
-        bobBalWei,
-        ethers.parseEther('10'),
-        'Bob should have exactly 10 GLMR',
+      const receipt     = await tx.wait();               // mined in #receipt.blockNumber
+      const bobBalWei   = await provider.getBalance(
+        bob,
+        receipt.blockNumber                // explicit tag bypasses the cache
       );
+      assert.equal(bobBalWei, ethers.parseEther('10'));
     });
   });
 });
