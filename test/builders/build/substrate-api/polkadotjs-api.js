@@ -55,13 +55,13 @@ describe('Polkadot.js API', function () {
   describe('Keyrings - Adding Accounts', async () => {
     it('should extract the ethereum address from the mnemonic', async () => {
       // Derive using BIP-39 + BIP-44 via ethers
-      const wallet = HDNodeWallet.fromPhrase(alice.mnemonic, undefined, ethDerPath);
+      const wallet = HDNodeWallet.fromPhrase(alice.mnemonic, null, ethDerPath);
       assert.equal(wallet.address, alice.address);
     });
 
     it('should extract the private key from the mnemonic', async () => {
       // Derive using BIP-39 + BIP-44 via ethers
-      const wallet = HDNodeWallet.fromPhrase(alice.mnemonic, undefined, ethDerPath);
+      const wallet = HDNodeWallet.fromPhrase(alice.mnemonic, null, ethDerPath);
       const privateKey = wallet.privateKey; // 0x-prefixed
       assert.equal(privateKey, alice.pk);
     });
