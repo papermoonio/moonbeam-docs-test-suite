@@ -1,8 +1,6 @@
 import { assert, expect } from 'chai';
-import { ethers } from 'ethers';
+import { ethers, HDNodeWallet } from 'ethers';
 import { ApiPromise, WsProvider } from '@polkadot/api';
-import { u8aToHex } from '@polkadot/util';
-import { mnemonicToLegacySeed, hdEthereum } from '@polkadot/util-crypto';
 import Keyring from '@polkadot/keyring';
 
 /* These tests don't rely on the output of the calls, just that the calls
@@ -56,22 +54,18 @@ describe('Polkadot.js API', function () {
 
   describe('Keyrings - Adding Accounts', async () => {
     it('should extract the ethereum address from the mnemonic', async () => {
-      // Create a keyring instance
-      const keyringECDSA = new Keyring({ type: 'ethereum' });
-
-      // Extract Ethereum address from mnemonic
-      const newPairEth = keyringECDSA.addFromUri(`${alice.mnemonic}/${ethDerPath}`);
-
-      assert.equal(newPairEth.address, alice.address);
+      // Derive using BIP-39 + BIP-44 via ethers
+      const wallet = HDNodeWallet.fromPhrase(alice.mnemonic, undefined, ethDerPath);
+      assert.equal(wallet.address, alice.address);
     });
-    it('should extract the private key from the mnemonic', async () => {
-      // Extract private key from mnemonic
-      const privateKey = u8aToHex(
-        hdEthereum(mnemonicToLegacySeed(alice.mnemonic, '', false, 64), ethDerPath).secretKey
-      );
 
+    it('should extract the private key from the mnemonic', async () => {
+      // Derive using BIP-39 + BIP-44 via ethers
+      const wallet = HDNodeWallet.fromPhrase(alice.mnemonic, undefined, ethDerPath);
+      const privateKey = wallet.privateKey; // 0x-prefixed
       assert.equal(privateKey, alice.pk);
     });
+
     it('should extract the address from the private key', async () => {
       // Create a keyring instance
       const keyringECDSA = new Keyring({ type: 'ethereum' });
@@ -129,6 +123,7 @@ describe('Polkadot.js API', function () {
 
       expect(info.weight.refTime.toNumber()).to.be.greaterThan(0);
     });
+
     it('should sign and send a batch transaction successfully', async () => {
       // Create a keyring instance
       const keyring = new Keyring({ type: 'ethereum' });
