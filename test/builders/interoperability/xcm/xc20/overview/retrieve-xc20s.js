@@ -17,7 +17,7 @@ describe('Overview of XC-20s - Current List of External XC-20s', function () {
     it('should return the correct counter for XC-20s on Moonbeam', async () => {
       const api = await getApi('wss://wss.api.moonbeam.network');
       const counter = await api.query.evmForeignAssets.counterForAssetsById();
-      assert.equal(counter.toNumber(), 54);
+      assert.equal(counter.toNumber(), 55);
       api.disconnect();
     }).timeout(15000);
 
