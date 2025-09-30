@@ -1,6 +1,9 @@
 import { assert, expect } from 'chai';
-import { ethers, HDNodeWallet } from 'ethers';
+import { ethers } from 'ethers';
 import { ApiPromise, WsProvider } from '@polkadot/api';
+import { u8aToHex } from '@polkadot/util';
+import { hdEthereum } from '@polkadot/util-crypto';
+import { mnemonicToSeedSync } from 'bip39';
 import Keyring from '@polkadot/keyring';
 
 /* These tests don't rely on the output of the calls, just that the calls
@@ -13,9 +16,8 @@ describe('Polkadot.js API', function () {
     mnemonic: 'bottom drive obey lake curtain smoke basket hold race lonely fit walk',
   };
 
-  // Define index of the derivation path and the derivation path
-  const index = 0;
-  const ethDerPath = "m/44'/60'/0'/0/" + index;
+  // Use the exact EVM derivation path
+  const ethDerPath = "m/44'/60'/0'/0/0";
 
   // Define the API
   let api;
@@ -54,26 +56,35 @@ describe('Polkadot.js API', function () {
 
   describe('Keyrings - Adding Accounts', async () => {
     it('should extract the ethereum address from the mnemonic', async () => {
-      // Derive using BIP-39 + BIP-44 via ethers
-      const wallet = HDNodeWallet.fromPhrase(alice.mnemonic, undefined, ethDerPath);
-      assert.equal(wallet.address, alice.address);
+      // Mirror the working snippet: createFromUri with 'ethereum' and 2048
+      const keyring = new Keyring();
+      const pair = keyring.createFromUri(
+        `${alice.mnemonic}/${ethDerPath}`,
+        undefined,
+        'ethereum',
+        undefined,
+        2048
+      );
+      assert.equal(pair.address, alice.address);
     });
 
     it('should extract the private key from the mnemonic', async () => {
-      // Derive using BIP-39 + BIP-44 via ethers
-      const wallet = HDNodeWallet.fromPhrase(alice.mnemonic, undefined, ethDerPath);
-      const privateKey = wallet.privateKey; // 0x-prefixed
+      // Use a BIP-39 seed (via bip39) and Polkadot's hdEthereum for derivation
+      const seed = mnemonicToSeedSync(alice.mnemonic, '');   // Buffer
+      const node = hdEthereum(seed, ethDerPath);             // "m/44'/60'/0'/0/0"
+      const privateKey = u8aToHex(node.secretKey);
       assert.equal(privateKey, alice.pk);
     });
 
     it('should extract the address from the private key', async () => {
-      // Create a keyring instance
-      const keyringECDSA = new Keyring({ type: 'ethereum' });
-
-      // Extract address from private key
-      const otherPair = keyringECDSA.addFromUri(alice.pk);
-
-      assert.equal(otherPair.address, alice.address);
+      // Use createFromUri for consistency with the other keyring tests
+      const keyring = new Keyring();
+      const pairFromPk = keyring.createFromUri(
+        alice.pk,
+        undefined,
+        'ethereum'
+      );
+      assert.equal(pairFromPk.address, alice.address);
     });
   });
 
