@@ -28,7 +28,7 @@ describe('Runtime Upgrades', () => {
       const api = await getApi('wss://wss.api.moonbeam.network');
       const runtime = await api.query.system.lastRuntimeUpgrade();
       // Assert the runtime is equal to the latest version we have on the docs
-      assert.equal(runtime.toJSON().specVersion, 3800);
+      assert.equal(runtime.toJSON().specVersion, 3900);
       api.disconnect();
     });
   });
