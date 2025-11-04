@@ -32,8 +32,10 @@ describe('Account Balances', () => {
     it('should return the balance locks of an account', async () => {
       // Get the balance locks for Alice
       const locksData = await api.query.balances.locks(alice.address);
+      // Convert to JSON to access the data
+      const locksDataJson = locksData.toJSON();
       // Alice should have one balance lock since she is the default collator on dev nodes
-      const collatorLock = locksData[0];
+      const collatorLock = locksDataJson[0];
       const lockId = stringToHex('stkngcol');
       // Assert that she has a balance lock for collating
       assert.equal(lockId, collatorLock.id);
