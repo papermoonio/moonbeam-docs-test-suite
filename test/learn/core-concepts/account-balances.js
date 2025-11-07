@@ -1,4 +1,4 @@
-import { assert, expect } from 'chai';
+import { assert } from 'chai';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { ethers } from 'ethers';
 
