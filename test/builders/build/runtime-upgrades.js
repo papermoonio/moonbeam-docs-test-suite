@@ -14,14 +14,14 @@ describe('Runtime Upgrades', () => {
       const api = await getApi('wss://wss.api.moonbase.moonbeam.network');
       const runtime = await api.query.system.lastRuntimeUpgrade();
       // Assert the runtime is equal to the latest version we have on the docs
-      assert.equal(runtime.toJSON().specVersion, 4100);
+      assert.equal(runtime.toJSON().specVersion, 4103);
       api.disconnect();
     });
     it('should return the latest runtime version for Moonriver', async () => {
       const api = await getApi('wss://wss.api.moonriver.moonbeam.network');
       const runtime = await api.query.system.lastRuntimeUpgrade();
       // Assert the runtime is equal to the latest version we have on the docs
-      assert.equal(runtime.toJSON().specVersion, 4102);
+      assert.equal(runtime.toJSON().specVersion, 4103);
       api.disconnect();
     });
     it('should return the latest runtime version for Moonbeam', async () => {
