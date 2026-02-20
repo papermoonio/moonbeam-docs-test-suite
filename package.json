@@ -11,8 +11,9 @@
     "prettier": "npx prettier --write .",
     "javascript-test": "mocha -r dotenv/config 'test/**/*.js' --timeout 10000",
     "hardhat-test": "npm --prefix ./test/builders/build/eth-api/dev-env/hardhat run update-packages && npm --prefix ./test/builders/build/eth-api/dev-env/hardhat run test",
+    "waffle-test": "npm --prefix ./test/builders/build/eth-api/dev-env/waffle run update-and-build && npm --prefix ./test/builders/build/eth-api/dev-env/waffle run test",
     "python-test": "python3 test/run_python_tests.py",
-    "test": "npm run python-test && npm run hardhat-test && npm run javascript-test",
+    "test": "npm run python-test && npm run hardhat-test && npm run waffle-test && npm run javascript-test",
     "update-packages": "npx npm-check-updates -u && npm install --silent"
   },
   "mocha": {
