@@ -14,7 +14,7 @@ describe('Consensus & Finality - Finality with Ethereum Libraries', () => {
   };
   const bob = ethers.Wallet.createRandom().address;
 
-  const finalizedTxHash = '0x3ea780d2e53fc265e9d251b5f41794c3d5ec4a32e854ca6562b111ec7002057e';
+  const finalizedTxHash = '0x17349df9f12b0dd5ad30ab8f8177a86caf5a69ffcd407ebc552756f1079a846d';
 
   /** HELPER FUNCTIONS */
   const waitForBlock = async (blockNumber, maxAttempts = 30) => {
